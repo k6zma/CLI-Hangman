@@ -10,7 +10,6 @@ func ReadJSON(filename string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	
 	defer file.Close()
 
 	byteValue, err := io.ReadAll(file)
