@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"encoding/json"
+
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
 )
