@@ -5,6 +5,14 @@ import (
 	"os"
 )
 
+// ReadJSON opens a file and reads its data
+//
+// Parameters:
+// - filename: a string representing the path to the JSON file
+//
+// Function returns:
+// - []byte: a byte slice containing the file content
+// - error: an error if there was an issue opening or reading the file
 func ReadJSON(filename string) ([]byte, error) {
 	file, err := os.Open(filename)
 	if err != nil {
