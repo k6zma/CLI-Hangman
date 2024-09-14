@@ -1,8 +1,9 @@
 package infrastructure
 
 import (
-	"fmt"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
+
+	"fmt"
 	"os"
 	"time"
 )
