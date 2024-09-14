@@ -99,3 +99,28 @@ func NewInputMaxAttemptsError(message string) error {
 func (err InputMaxAttemptsError) Error() string {
 	return err.message
 }
+
+// InputRulesSuggestionError defines a custom error for invalid rules suggestion input.
+//
+// Fields:
+// - message: the error message that describes the issue.
+type InputRulesSuggestionError struct {
+	message string
+}
+
+// NewInputRulesSuggestionError is a constructor that creates and returns a new InputRulesSuggestionError.
+//
+// Parameters:
+// - message: a string containing the error message.
+//
+// Function returns:
+// - error: a new instance of InputRulesSuggestionError.
+func NewInputRulesSuggestionError(message string) error {
+	return &InputRulesSuggestionError{
+		message: message,
+	}
+}
+
+func (err InputRulesSuggestionError) Error() string {
+	return err.message
+}

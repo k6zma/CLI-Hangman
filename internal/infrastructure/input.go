@@ -157,3 +157,19 @@ func RequestGameProperties() *domain.GameProperties {
 
 	return domain.NewGameProperties(language, difficulty, maxAttempts)
 }
+
+func AcceptTheRules() (bool, error) {
+	var input string
+	if _, err := fmt.Scanln(&input); err != nil {
+		return false, NewInputRulesSuggestionError("error with input suggestion")
+	}
+
+	switch input {
+	case "agree":
+		return true, nil
+	case "disagree":
+		return false, nil
+	default:
+		return false, NewInputRulesSuggestionError("you entered an unknown word")
+	}
+}

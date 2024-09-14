@@ -21,6 +21,8 @@ func (s *GameService) StartGame(wordsFilename string) (*domain.Game, error) {
 		return nil, err
 	}
 
+	infrastructure.HangmanIntro()
+
 	gameProperties := infrastructure.RequestGameProperties()
 
 	language, err := gameProperties.GetLanguageFromProperties()
