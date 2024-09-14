@@ -18,12 +18,12 @@ import (
 func LoadWords(filename string) (*domain.ParsedWords, error) {
 	jsonData, err := utils.ReadJSON(filename)
 	if err != nil {
-		return nil, domain.NewWordLoaderError("failed to read JSON")
+		return nil, NewWordLoaderError("failed to read JSON")
 	}
 
 	var parsedWords domain.ParsedWords
 	if err := json.Unmarshal(jsonData, &parsedWords); err != nil {
-		return nil, domain.NewWordLoaderError("failed to parse JSON")
+		return nil, NewWordLoaderError("failed to parse JSON")
 	}
 
 	return &parsedWords, nil
