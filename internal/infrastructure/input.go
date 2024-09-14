@@ -42,7 +42,11 @@ func inputLanguage() (string, error) {
 func inputDifficulty() (string, error) {
 	var difficulty string
 	if _, err := fmt.Scanln(&difficulty); err != nil {
-		return "", NewInputDifficultyError("error with scan line")
+		if err.Error() == "unexpected newline" {
+			difficulty = ""
+		} else {
+			return "", NewInputDifficultyError("error with scan line")
+		}
 	}
 
 	difficulty = strings.TrimSpace(difficulty)
