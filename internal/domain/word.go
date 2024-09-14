@@ -1,11 +1,21 @@
 package domain
 
+// WordWithHintJSON represents a structure for a word and its hint parsed from JSON.
+//
+// Fields:
+// - Word: The word to guess.
+// - Hint: A hint to help the player guess the word.
+type WordWithHintJSON struct {
+	Word string `json:"word"`
+	Hint string `json:"hint"`
+}
+
 // ParsedWords represents the structure which has words in different languages parsed from JSON.
 //
 // Fields:
-// - EnWords: English words.
-// - RuWords: Russian words.
+// - EnWords: English words with hints.
+// - RuWords: Russian words with hints.
 type ParsedWords struct {
-	EnWords []string `json:"en-words"`
-	RuWords []string `json:"ru-words"`
+	EnWords []WordWithHintJSON `json:"en-words"`
+	RuWords []WordWithHintJSON `json:"ru-words"`
 }
