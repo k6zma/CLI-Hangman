@@ -28,6 +28,8 @@ func inputLanguage() (string, error) {
 
 	language = strings.TrimSpace(language)
 
+	language = strings.ToLower(language)
+
 	switch language {
 	case "russian", "ru", "ру", "русский":
 		return "ru", nil
@@ -54,6 +56,8 @@ func inputDifficulty() (string, error) {
 	}
 
 	difficulty = strings.TrimSpace(difficulty)
+
+	difficulty = strings.ToLower(difficulty)
 
 	switch difficulty {
 	case "easy", "изи", "легкий":
@@ -172,6 +176,8 @@ func AcceptTheRules() (bool, error) {
 	if _, err := fmt.Scanln(&input); err != nil {
 		return false, NewInputRulesSuggestionError("error with input suggestion")
 	}
+
+	input = strings.ToLower(input)
 
 	switch input {
 	case "agree":
