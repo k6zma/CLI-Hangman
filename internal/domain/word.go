@@ -85,7 +85,7 @@ func NewWord(jsonData WordWithHintJSON, language, difficulty string) *Word {
 // GetLetters returns the letters (runes) of the word.
 func (w *Word) GetLetters() ([]rune, error) {
 	if len(w.letters) == 0 {
-		return nil, NewGetFieldsOfWordError("letters fields is empty")
+		return nil, NewGetFieldsOfWordError("letters fields are empty")
 	}
 
 	return w.letters, nil
