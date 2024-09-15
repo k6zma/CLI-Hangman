@@ -10,6 +10,21 @@ type WordWithHintJSON struct {
 	Hint     string `json:"hint"`
 }
 
+// NewWordWithHintJSON initializes a new WordWithHintJSON object.
+//
+// Parameters:
+// - word: the word to guess.
+// - hint: a hint to help the player guess the word.
+//
+// Function returns:
+// - *WordWithHintJSON: a pointer to the initialized WordWithHintJSON object.
+func NewWordWithHintJSON(word, hint string) *WordWithHintJSON {
+	return &WordWithHintJSON{
+		WordData: word,
+		Hint:     hint,
+	}
+}
+
 // ParsedWords represents the structure which has words in different languages parsed from JSON.
 //
 // Fields:
@@ -18,6 +33,21 @@ type WordWithHintJSON struct {
 type ParsedWords struct {
 	EnWords []WordWithHintJSON `json:"en-words"`
 	RuWords []WordWithHintJSON `json:"ru-words"`
+}
+
+// NewParsedWords initializes a new ParsedWords object.
+//
+// Parameters:
+// - enWords: a slice of WordWithHintJSON representing English words with hints.
+// - ruWords: a slice of WordWithHintJSON representing Russian words with hints.
+//
+// Function returns:
+// - *ParsedWords: a pointer to the initialized ParsedWords object.
+func NewParsedWords(enWords []WordWithHintJSON, ruWords []WordWithHintJSON) *ParsedWords {
+	return &ParsedWords{
+		EnWords: enWords,
+		RuWords: ruWords,
+	}
 }
 
 // Word represents a word l metadata.
