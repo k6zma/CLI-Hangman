@@ -246,7 +246,7 @@ func PrintHint(game *domain.Game) {
 	}
 }
 
-// PrintGameOver prints the GameOver ASCII art
+// PrintGameOver prints the GameOver ASCII art.
 func PrintGameOver() {
 	gameASCII := `
   ____    _    __  __ _____ 
@@ -262,13 +262,13 @@ func PrintGameOver() {
 | |_| |\ V / | |___|  _ < 
  \___/  \_/  |_____|_| \_\
 `
-	delayOfPrintingSymbols := 3 * time.Millisecond
+	delayOfPrintingSymbols := 2 * time.Millisecond
 
 	printTextPerSymbol(gameASCII, delayOfPrintingSymbols)
 	printTextPerSymbol(overASCII, delayOfPrintingSymbols)
 }
 
-// PrintVictory prints the win ASCII art
+// PrintVictory prints the win ASCII art.
 func PrintVictory() {
 	victoryASCII := `
 __   _____  _   _  __        _____ _   _ _ 
@@ -277,7 +277,7 @@ __   _____  _   _  __        _____ _   _ _
   | || |_| | |_| |   \ V  V /  | || |\  |_|
   |_| \___/ \___/     \_/\_/  |___|_| \_(_)
 `
-	delayOfPrintingSymbols := 3 * time.Millisecond
+	delayOfPrintingSymbols := 2 * time.Millisecond
 
 	printTextPerSymbol(victoryASCII, delayOfPrintingSymbols)
 }
