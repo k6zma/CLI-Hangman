@@ -5,6 +5,7 @@ import (
 
 	"crypto/rand"
 	"math/big"
+	"unicode/utf8"
 )
 
 // SelectWordByDifficulty filters words based on difficulty and returns a random word.
@@ -20,17 +21,19 @@ func SelectWordByDifficulty(words []domain.WordWithHintJSON, difficulty string) 
 	var filteredWords []domain.WordWithHintJSON
 
 	for _, word := range words {
+		wordLength := utf8.RuneCountInString(word.WordData)
+
 		switch difficulty {
 		case "easy":
-			if len(word.WordData) <= 4 {
+			if wordLength <= 4 {
 				filteredWords = append(filteredWords, word)
 			}
 		case "medium":
-			if len(word.WordData) > 4 && len(word.WordData) <= 7 {
+			if wordLength > 4 && wordLength <= 7 {
 				filteredWords = append(filteredWords, word)
 			}
 		case "hard":
-			if len(word.WordData) > 7 {
+			if wordLength > 7 {
 				filteredWords = append(filteredWords, word)
 			}
 		default:
