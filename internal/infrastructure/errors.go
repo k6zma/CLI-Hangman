@@ -124,3 +124,28 @@ func NewInputRulesSuggestionError(message string) error {
 func (err InputRulesSuggestionError) Error() string {
 	return err.message
 }
+
+// InputLetterError defines a custom error for invalid letter input.
+//
+// Fields:
+// - message: the error message that describes the issue.
+type InputLetterError struct {
+	message string
+}
+
+// NewInputLetterError is a constructor that creates and returns a new InputLetterError.
+//
+// Parameters:
+// - message: a string containing the error message.
+//
+// Function returns:
+// - error: a new instance of InputLetterError.
+func NewInputLetterError(message string) error {
+	return &InputLetterError{
+		message: message,
+	}
+}
+
+func (err InputLetterError) Error() string {
+	return err.message
+}

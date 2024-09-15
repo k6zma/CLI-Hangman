@@ -1,6 +1,10 @@
 package infrastructure
 
 import (
+	"bufio"
+	"os"
+	"unicode/utf8"
+
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
 
@@ -158,6 +162,11 @@ func RequestGameProperties() *domain.GameProperties {
 	return domain.NewGameProperties(language, difficulty, maxAttempts)
 }
 
+// AcceptTheRules collects user input to accept or reject the rules.
+//
+// Function returns:
+// - bool: true if the user agrees, false otherwise.
+// - error: an error if the input is invalid or an unknown word is entered.
 func AcceptTheRules() (bool, error) {
 	var input string
 	if _, err := fmt.Scanln(&input); err != nil {
@@ -172,4 +181,52 @@ func AcceptTheRules() (bool, error) {
 	default:
 		return false, NewInputRulesSuggestionError("you entered an unknown word")
 	}
+}
+
+// isLetter checks if the given rune is a letter.
+//
+// Parameters:
+// - letter: a symbol represented in rune.
+//
+// Function returns:
+// - bool: true if the rune is a letter, false otherwise.
+func isLetter(letter rune) bool {
+	if (letter >= 'A' && letter <= 'Z') || (letter >= 'a' && letter <= 'z') {
+		return true
+	}
+
+	if (letter >= 'А' && letter <= 'Я') || (letter >= 'а' && letter <= 'я') {
+		return true
+	}
+
+	return false
+}
+
+// GetLetterFromUser collects a single letter input from the user.
+//
+// Function returns:
+// - rune: the letter entered by the user.
+// - error: an error if the input is invalid or not a single letter.
+func GetLetterFromUser() (rune, error) {
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Println("Please enter a letter:")
+
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+
+	input = strings.TrimSpace(input)
+
+	if utf8.RuneCountInString(input) != 1 {
+		return 0, NewInputLetterError("please enter only one letter")
+	}
+
+	letter, _ := utf8.DecodeRuneInString(input)
+	if !isLetter(letter) {
+		return 0, NewInputLetterError("please enter a valid letter")
+	}
+
+	return letter, nil
 }

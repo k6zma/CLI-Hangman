@@ -1,6 +1,9 @@
 package infrastructure
 
 import (
+	"strings"
+
+	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
 
 	"fmt"
@@ -8,6 +11,11 @@ import (
 	"time"
 )
 
+// printTextPerSymbol prints the given text character by character with a delay.
+//
+// Parameters:
+// - text: the string to be printed.
+// - delay: the duration to wait between printing each character.
 func printTextPerSymbol(text string, delay time.Duration) {
 	for _, char := range text {
 		fmt.Print(string(char))
@@ -15,6 +23,7 @@ func printTextPerSymbol(text string, delay time.Duration) {
 	}
 }
 
+// printASCIIArt prints ASCII art for the Hangman game and CLI game title.
 func printASCIIArt() {
 	hangmanASCII := `
  _   _    _    _   _  ____ __  __    _    _   _ 
@@ -38,6 +47,7 @@ func printASCIIArt() {
 	time.Sleep(1 * time.Second)
 }
 
+// printRules prints the game rules to the terminal.
 func printRules() {
 	fmt.Println("Here you can read the rules: ")
 	fmt.Println("1) Available languages - Russian and English")
@@ -45,11 +55,12 @@ func printRules() {
 	fmt.Println("3) The number of attempts must be in the range from 1 to 99")
 	fmt.Println("4) You can only enter one letter at a time")
 	fmt.Println("5) If you enter the wrong letter, you lose one attempt")
-	fmt.Println("6) If you have less than 30% of attempts left, you will be offered a hint")
+	fmt.Println("6) If you have less than 20% of attempts left, you will be offered a hint")
 	fmt.Println("")
 	fmt.Println("Now you can agree with the rules or not, type agree or disagree")
 }
 
+// HangmanIntro displays the introduction for the Hangman game and handles user agreement to the rules.
 func HangmanIntro() {
 	utils.ClearScreen()
 	printASCIIArt()
@@ -77,5 +88,159 @@ func HangmanIntro() {
 		}
 
 		fmt.Println("Error:", err)
+	}
+}
+
+// PrintWordState prints the current state of the word being guessed.
+//
+// Parameters:
+// - game: a pointer to the Game object containing the game state.
+func PrintWordState(game *domain.Game) {
+	wordLetters, err := game.GetWordLetters()
+	if err != nil {
+		fmt.Println("Error getting word letters:", err)
+		return
+	}
+
+	guessedLetters, err := game.GetGuessedLetters()
+	if err != nil {
+		fmt.Println("Error getting guessed letters:", err)
+		return
+	}
+
+	wordState := ""
+
+	for _, letter := range wordLetters {
+		if guessedLetters[letter] {
+			wordState += string(letter) + " "
+		} else {
+			wordState += "_ "
+		}
+	}
+
+	fmt.Println("Current word state:", wordState)
+}
+
+// PrintAvailableLetters prints the letters that have not been guessed yet.
+//
+// Parameters:
+// - game: a pointer to the Game object containing the game state.
+func PrintAvailableLetters(game *domain.Game) {
+	var alphabet string
+
+	language, err := game.GetLanguage()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	if language == "en" {
+		alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	} else {
+		alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+	}
+
+	availableLetters := ""
+
+	guessedLetters, err := game.GetGuessedLetters()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	for _, letter := range alphabet {
+		lowerLetter := rune(strings.ToLower(string(letter))[0])
+		if !guessedLetters[letter] && !guessedLetters[lowerLetter] {
+			availableLetters += string(letter) + " "
+		}
+	}
+
+	fmt.Println("Available letters:", availableLetters)
+}
+
+// PrintHangman prints the current hangman stage based on the number of attempts left.
+//
+// Parameters:
+// - game: a pointer to the Game object containing the game state.
+func PrintHangman(game *domain.Game) {
+	stages := []string{
+		`
+  +---+
+      |
+      |
+      |
+     ===`, `
+  +---+
+  O   |
+      |
+      |
+     ===`, `
+  +---+
+  O   |
+  |   |
+      |
+     ===`, `
+  +---+
+  O   |
+ /|   |
+      |
+     ===`, `
+  +---+
+  O   |
+ /|\  |
+      |
+     ===`, `
+  +---+
+  O   |
+ /|\  |
+ /    |
+     ===`, `
+  +---+
+  O   |
+ /|\  |
+ / \  |
+     ===`,
+	}
+
+	currentAttempts, err := game.GetCurrentAttempts()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	maxAttempts, err := game.GetMaxAttempts()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	percentage := float64(currentAttempts) / float64(maxAttempts)
+	stageIndex := int(percentage * float64(len(stages)-1))
+
+	if stageIndex >= len(stages) {
+		fmt.Println(stages[len(stages)-1])
+	} else {
+		fmt.Println(stages[stageIndex])
+	}
+}
+
+// PrintHint prints a hint if the player has less than 30% of attempts left.
+//
+// Parameters:
+// - game: a pointer to the Game object containing the game state.
+func PrintHint(game *domain.Game) {
+	currentAttempts, err := game.GetCurrentAttempts()
+	if err != nil {
+		fmt.Println("Error getting current attempts:", err)
+	}
+
+	maxAttempts, err := game.GetMaxAttempts()
+	if err != nil {
+		fmt.Println("Error getting max attempts:", err)
+	}
+
+	if float64(currentAttempts)/float64(maxAttempts) >= 0.8 {
+		hint, _ := game.GetWordHint()
+		fmt.Println("Hint:", hint)
 	}
 }
