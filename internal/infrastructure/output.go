@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"strings"
+	"unicode"
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
@@ -126,7 +126,7 @@ func PrintWordState(game *domain.Game) {
 // Parameters:
 // - game: a pointer to the Game object containing the game state.
 func PrintAvailableLetters(game *domain.Game) {
-	var alphabet string
+	var alphabet []rune
 
 	language, err := game.GetLanguage()
 	if err != nil {
@@ -135,9 +135,9 @@ func PrintAvailableLetters(game *domain.Game) {
 	}
 
 	if language == "en" {
-		alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		alphabet = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	} else {
-		alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+		alphabet = []rune("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ")
 	}
 
 	availableLetters := ""
@@ -149,8 +149,9 @@ func PrintAvailableLetters(game *domain.Game) {
 	}
 
 	for _, letter := range alphabet {
-		lowerLetter := rune(strings.ToLower(string(letter))[0])
-		if !guessedLetters[letter] && !guessedLetters[lowerLetter] {
+		lowerLetter := unicode.ToLower(letter)
+
+		if !guessedLetters[lowerLetter] && !guessedLetters[unicode.ToUpper(lowerLetter)] {
 			availableLetters += string(letter) + " "
 		}
 	}
@@ -243,4 +244,40 @@ func PrintHint(game *domain.Game) {
 		hint, _ := game.GetWordHint()
 		fmt.Println("Hint:", hint)
 	}
+}
+
+// PrintGameOver prints the GameOver ASCII art
+func PrintGameOver() {
+	gameASCII := `
+  ____    _    __  __ _____ 
+ / ___|  / \  |  \/  | ____|
+| |  _  / _ \ | |\/| |  _|  
+| |_| |/ ___ \| |  | | |___ 
+ \____/_/   \_\_|  |_|_____|
+`
+	overASCII := `
+  _____     _______ ____  
+ / _ \ \   / / ____|  _ \ 
+| | | \ \ / /|  _| | |_) |
+| |_| |\ V / | |___|  _ < 
+ \___/  \_/  |_____|_| \_\
+`
+	delayOfPrintingSymbols := 3 * time.Millisecond
+
+	printTextPerSymbol(gameASCII, delayOfPrintingSymbols)
+	printTextPerSymbol(overASCII, delayOfPrintingSymbols)
+}
+
+// PrintVictory prints the win ASCII art
+func PrintVictory() {
+	victoryASCII := `
+__   _____  _   _  __        _____ _   _ _ 
+\ \ / / _ \| | | | \ \      / /_ _| \ | | |
+ \ V / | | | | | |  \ \ /\ / / | ||  \| | |
+  | || |_| | |_| |   \ V  V /  | || |\  |_|
+  |_| \___/ \___/     \_/\_/  |___|_| \_(_)
+`
+	delayOfPrintingSymbols := 3 * time.Millisecond
+
+	printTextPerSymbol(victoryASCII, delayOfPrintingSymbols)
 }

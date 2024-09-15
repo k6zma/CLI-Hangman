@@ -147,15 +147,15 @@ func (s *GameService) RunGameLoop(game *domain.Game) error {
 	infrastructure.PrintWordState(game)
 
 	if game.IsGameWon() {
-		fmt.Println("Congratulations! You won!")
+		infrastructure.PrintVictory()
 	} else {
 		wordLetters, err := game.GetWordLetters()
 		if err != nil {
 			return err
 		}
 
-		fmt.Println("Game over!")
-		fmt.Println("The word was:", string(wordLetters))
+		infrastructure.PrintGameOver()
+		fmt.Println("\nThe word was:", string(wordLetters))
 	}
 
 	return nil
