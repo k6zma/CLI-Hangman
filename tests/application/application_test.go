@@ -1,7 +1,6 @@
-package application_test
+package application
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/stretchr/testify/assert"
 
@@ -14,21 +13,21 @@ import (
 
 // WordSelectorError error type checking.
 func TestWordSelectorError(t *testing.T) {
-	err := application.NewWordSelectorError("failed to select the word")
+	err := NewWordSelectorError("failed to select the word")
 	assert.NotNil(t, err)
 	assert.Equal(t, "failed to select the word", err.Error())
 }
 
 // WordsLoadingError error type checking.
 func TestWordsLoadingError(t *testing.T) {
-	err := application.NewWordsLoadingError("failed to load words")
+	err := NewWordsLoadingError("failed to load words")
 	assert.NotNil(t, err)
 	assert.Equal(t, "failed to load words", err.Error())
 }
 
 // GamePropertiesCollectingError error type checking.
 func TestGamePropertiesCollectingError(t *testing.T) {
-	err := application.NewGamePropertiesCollectingError("failed to collect game properties")
+	err := NewGamePropertiesCollectingError("failed to collect game properties")
 	assert.NotNil(t, err)
 	assert.Equal(t, "failed to collect game properties", err.Error())
 }
@@ -39,7 +38,7 @@ func TestGamePropertiesCollectingError(t *testing.T) {
 
 // Сhecking the game service constructor.
 func TestNewGameService(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 	assert.NotNil(t, gameService)
 }
 
@@ -50,7 +49,7 @@ func TestNewGameService(t *testing.T) {
 // - Difficulty: easy.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesEnEasy(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		EnWords: []domain.WordWithHintJSON{
@@ -76,7 +75,7 @@ func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 // - Difficulty: medium.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesEnMedium(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		EnWords: []domain.WordWithHintJSON{
@@ -102,7 +101,7 @@ func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 // - Difficulty: hard.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesEnHard(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		EnWords: []domain.WordWithHintJSON{
@@ -128,7 +127,7 @@ func TestSelectWordByPropertiesEnHard(t *testing.T) {
 // - Difficulty: easy.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesRuEasy(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		RuWords: []domain.WordWithHintJSON{
@@ -154,7 +153,7 @@ func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 // - Difficulty: medium.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesRuMedium(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		RuWords: []domain.WordWithHintJSON{
@@ -180,7 +179,7 @@ func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 // - Difficulty: hard.
 // - MaxAttempts: 5.
 func TestSelectWordByPropertiesRuHard(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	words := domain.ParsedWords{
 		RuWords: []domain.WordWithHintJSON{
@@ -209,7 +208,7 @@ func TestInvalidDifficultyEn(t *testing.T) {
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
-	selectedWord, err := application.SelectWordByDifficulty(words, "impossible")
+	selectedWord, err := SelectWordByDifficulty(words, "impossible")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
 	assert.EqualError(t, err, "invalid difficulty level")
@@ -225,7 +224,7 @@ func TestInvalidDifficultyRu(t *testing.T) {
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
-	selectedWord, err := application.SelectWordByDifficulty(words, "невозомжно")
+	selectedWord, err := SelectWordByDifficulty(words, "невозомжно")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
 	assert.EqualError(t, err, "invalid difficulty level")
@@ -241,7 +240,7 @@ func TestNoWordsForDifficultyEn(t *testing.T) {
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
-	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
+	selectedWord, err := SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
 	assert.EqualError(t, err, "no words found for the selected difficulty")
@@ -257,7 +256,7 @@ func TestNoWordsForDifficultyRu(t *testing.T) {
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
-	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
+	selectedWord, err := SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
 	assert.EqualError(t, err, "no words found for the selected difficulty")
@@ -269,7 +268,7 @@ func TestNoWordsForDifficultyRu(t *testing.T) {
 
 // Checking that the game session is actually starting and is not nil.
 func TestStartGameSession(t *testing.T) {
-	gameService := application.NewGameService()
+	gameService := NewGameService()
 
 	selectedWord := domain.WordWithHintJSON{
 		WordData: "lime",
