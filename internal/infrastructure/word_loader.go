@@ -7,6 +7,8 @@ import (
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
 )
 
+var FileReader utils.FileReader = utils.DefaultFileReader{}
+
 // LoadWords loads and parses  words from JSON.
 //
 // Parameters:
@@ -16,7 +18,7 @@ import (
 // - *domain.ParsedWords: a pointer to the ParsedWords structure containing the words.
 // - error: an error if the file could not be read or the JSON could not be parsed.
 func LoadWords(filename string) (*domain.ParsedWords, error) {
-	jsonData, err := utils.ReadJSON(filename)
+	jsonData, err := FileReader.ReadJSON(filename)
 	if err != nil {
 		return nil, NewWordLoaderError("failed to read JSON")
 	}
