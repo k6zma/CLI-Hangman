@@ -46,7 +46,7 @@ func TestNewInputLetterError(t *testing.T) {
 // Stage 2: checking word loading.
 // --------------------------------
 
-// TestLoadWordsSuccess checks the success of loading words from a tmp file
+// TestLoadWordsSuccess checks the success of loading words from a tmp file.
 func TestLoadWordsSuccess(t *testing.T) {
 	content := `{
 		"en-words": [{"word": "lime", "hint": "green citrus fruit used in cocktails and cooking"}],
@@ -74,7 +74,7 @@ func TestLoadWordsSuccess(t *testing.T) {
 	assert.Equal(t, "лайм", wordsData.RuWords[0].WordData)
 }
 
-// TestLoadWordsFail checks the fail of loading words from a tmp file
+// TestLoadWordsFail checks the fail of loading words from a tmp file.
 func TestLoadWordsFail(t *testing.T) {
 	wordsData, err := infrastructure.LoadWords("invalid.json")
 
