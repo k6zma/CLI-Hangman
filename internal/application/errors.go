@@ -16,7 +16,7 @@ type WordSelectorError struct {
 // Function returns:
 // - error: a new instance of WordSelectorError.
 func NewWordSelectorError(message string) error {
-	return WordSelectorError{
+	return &WordSelectorError{
 		message: message,
 	}
 }
@@ -41,7 +41,7 @@ type WordsLoadingError struct {
 // Function returns:
 // - error: a new instance of WordsLoadingError.
 func NewWordsLoadingError(message string) error {
-	return WordSelectorError{
+	return &WordsLoadingError{
 		message: message,
 	}
 }
@@ -66,7 +66,7 @@ type GamePropertiesCollectingError struct {
 // Function returns:
 // - error: a new instance of GamePropertiesCollectingError.
 func NewGamePropertiesCollectingError(message string) error {
-	return WordSelectorError{
+	return &GamePropertiesCollectingError{
 		message: message,
 	}
 }
