@@ -219,6 +219,8 @@ func GetLetterFromUser() (rune, error) {
 
 	input = strings.TrimSpace(input)
 
+	input = strings.ToLower(input)
+
 	if utf8.RuneCountInString(input) != 1 {
 		return 0, NewInputLetterError("please enter only one letter")
 	}
