@@ -43,7 +43,7 @@ type ParsedWords struct {
 //
 // Function returns:
 // - *ParsedWords: a pointer to the initialized ParsedWords object.
-func NewParsedWords(enWords []WordWithHintJSON, ruWords []WordWithHintJSON) *ParsedWords {
+func NewParsedWords(enWords, ruWords []WordWithHintJSON) *ParsedWords {
 	return &ParsedWords{
 		EnWords: enWords,
 		RuWords: ruWords,

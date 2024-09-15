@@ -15,7 +15,7 @@ func NewGameService() *GameService {
 	return &GameService{}
 }
 
-// loadWords loads words from the given JSON file.
+// LoadWords loads words from the given JSON file.
 //
 // Parameters:
 // - wordsFilename: the path to the JSON file containing the words.
@@ -23,7 +23,7 @@ func NewGameService() *GameService {
 // Function returns:
 // - *domain.ParsedWords: a pointer to the structure containing the parsed words.
 // - error: an error if the file cannot be read or parsed.
-func (s *GameService) loadWords(wordsFilename string) (*domain.ParsedWords, error) {
+func (s *GameService) LoadWords(wordsFilename string) (*domain.ParsedWords, error) {
 	wordsData, err := infrastructure.LoadWords(wordsFilename)
 	if err != nil {
 		return nil, NewWordsLoadingError("error while loading the words")
@@ -32,11 +32,11 @@ func (s *GameService) loadWords(wordsFilename string) (*domain.ParsedWords, erro
 	return wordsData, nil
 }
 
-// initializeGameProperties initializes game properties by displaying an introduction and requesting user input.
+// InitializeGameProperties initializes game properties by displaying an introduction and requesting user input.
 //
 // Function returns:
 // - *domain.GameProperties: the initialized game properties.
-func (s *GameService) initializeGameProperties() *domain.GameProperties {
+func (s *GameService) InitializeGameProperties() *domain.GameProperties {
 	infrastructure.HangmanIntro()
 
 	gameProperties := infrastructure.RequestGameProperties()
@@ -44,7 +44,7 @@ func (s *GameService) initializeGameProperties() *domain.GameProperties {
 	return gameProperties
 }
 
-// selectWordByProperties selects a word based on the provided game properties.
+// SelectWordByProperties selects a word based on the provided game properties.
 //
 // Parameters:
 // - wD: the parsed words data containing words in different languages.
@@ -53,7 +53,7 @@ func (s *GameService) initializeGameProperties() *domain.GameProperties {
 // Function returns:
 // - *domain.WordWithHintJSON: a pointer to the selected word with a hint.
 // - error: an error if there is a failure to retrieve language, difficulty, or to select a word.
-func (s *GameService) selectWordByProperties(wD *domain.ParsedWords, gP *domain.GameProperties) (*domain.WordWithHintJSON, error) {
+func (s *GameService) SelectWordByProperties(wD *domain.ParsedWords, gP *domain.GameProperties) (*domain.WordWithHintJSON, error) {
 	language, err := gP.GetLanguageFromProperties()
 	if err != nil {
 		return nil, err
@@ -81,7 +81,7 @@ func (s *GameService) selectWordByProperties(wD *domain.ParsedWords, gP *domain.
 	return selectedWord, nil
 }
 
-// startGameSession initializes a new game session with the selected word and game properties.
+// StartGameSession initializes a new game session with the selected word and game properties.
 //
 // Parameters:
 // - selectedWord: the word selected based on language and difficulty.
@@ -90,7 +90,7 @@ func (s *GameService) selectWordByProperties(wD *domain.ParsedWords, gP *domain.
 // Function returns:
 // - *domain.Game: a pointer to the initialized game.
 // - error: an error if any game property fails to be retrieved.
-func (s *GameService) startGameSession(selectedWord *domain.WordWithHintJSON, gameProperties *domain.GameProperties) (*domain.Game, error) {
+func (s *GameService) StartGameSession(selectedWord *domain.WordWithHintJSON, gameProperties *domain.GameProperties) (*domain.Game, error) {
 	language, err := gameProperties.GetLanguageFromProperties()
 	if err != nil {
 		return nil, NewGamePropertiesCollectingError("failed to get language")
@@ -112,14 +112,14 @@ func (s *GameService) startGameSession(selectedWord *domain.WordWithHintJSON, ga
 	return game, nil
 }
 
-// runGameLoop executes the main game loop where the player guesses letters.
+// RunGameLoop executes the main game loop where the player guesses letters.
 //
 // Parameters:
 // - game: the pointer to the game object containing the current game state.
 //
 // Function returns:
 // - error: an error if the game encounters an issue while retrieving word letters at the end.
-func (s *GameService) runGameLoop(game *domain.Game) error {
+func (s *GameService) RunGameLoop(game *domain.Game) error {
 	for !game.IsGameOver() && !game.IsGameWon() {
 		utils.ClearScreen()
 
@@ -169,22 +169,22 @@ func (s *GameService) runGameLoop(game *domain.Game) error {
 // Function returns:
 // - error: an error if there is an issue at any stage of the game.
 func (s *GameService) StartGame(wordsFilename string) error {
-	wordsData, err := s.loadWords(wordsFilename)
+	wordsData, err := s.LoadWords(wordsFilename)
 	if err != nil {
 		return err
 	}
 
-	gameProperties := s.initializeGameProperties()
+	gameProperties := s.InitializeGameProperties()
 
-	selectedWord, err := s.selectWordByProperties(wordsData, gameProperties)
+	selectedWord, err := s.SelectWordByProperties(wordsData, gameProperties)
 	if err != nil {
 		return err
 	}
 
-	game, err := s.startGameSession(selectedWord, gameProperties)
+	game, err := s.StartGameSession(selectedWord, gameProperties)
 	if err != nil {
 		return err
 	}
 
-	return s.runGameLoop(game)
+	return s.RunGameLoop(game)
 }
