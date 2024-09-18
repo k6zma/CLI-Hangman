@@ -12,31 +12,31 @@ import (
 // Stage 1: checking custom errors.
 // --------------------------------
 
-// // WordLoaderError error type checking.
+// WordLoaderError error type checking.
 func TestNewWordLoaderError(t *testing.T) {
 	err := infrastructure.NewWordLoaderError("failed to load words")
 	assert.EqualError(t, err, "failed to load words")
 }
 
-// // InputLanguageError error type checking.
+// InputLanguageError error type checking.
 func TestNewInputLanguageError(t *testing.T) {
 	err := infrastructure.NewInputLanguageError("invalid language")
 	assert.EqualError(t, err, "invalid language")
 }
 
-// // InputDifficultyError error type checking.
+// InputDifficultyError error type checking.
 func TestNewInputDifficultyError(t *testing.T) {
 	err := infrastructure.NewInputDifficultyError("invalid difficulty")
 	assert.EqualError(t, err, "invalid difficulty")
 }
 
-// // InputMaxAttemptsError error type checking.
+// InputMaxAttemptsError error type checking.
 func TestNewInputMaxAttemptsError(t *testing.T) {
 	err := infrastructure.NewInputMaxAttemptsError("invalid max attempts")
 	assert.EqualError(t, err, "invalid max attempts")
 }
 
-// // InputLetterError error type checking.
+// InputLetterError error type checking.
 func TestNewInputLetterError(t *testing.T) {
 	err := infrastructure.NewInputLetterError("invalid letter")
 	assert.EqualError(t, err, "invalid letter")
