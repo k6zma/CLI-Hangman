@@ -142,6 +142,5 @@ The value is an array containing two fields:
 6. **Hints** - if less than 20% of attempts remain, a hint will be offered
 
 ## Example of working
-<div align="center">
-    <iframe src="https://player.vimeo.com/video/1010568935" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-</div>
+
+[Example of working](https://vimeo.com/1010568935)
