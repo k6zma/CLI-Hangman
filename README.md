@@ -141,7 +141,7 @@ The value is an array containing two fields:
 5. **Incorrect input** - if an incorrect letter is entered, 1 attempt is lost
 6. **Hints** - if less than 20% of attempts remain, a hint will be offered
 
-## Exmaple of working
+## Example of working
 <div align="center">
     <iframe src="https://player.vimeo.com/video/1010568935" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 </div>
