@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"unicode/utf8"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 )
 
 // SelectWordByDifficulty filters words based on difficulty and returns a random word.
@@ -17,8 +17,8 @@ import (
 // Function returns:
 // - *domain.WordWithHintJSON: a pointer to the selected word.
 // - error: an error if no word matches the difficulty or a bad difficulty is entered.
-func SelectWordByDifficulty(words []domain.WordWithHintJSON, difficulty string) (*domain.WordWithHintJSON, error) {
-	var filteredWords []domain.WordWithHintJSON
+func SelectWordByDifficulty(words []infrastructure.WordWithHintJSON, difficulty string) (*infrastructure.WordWithHintJSON, error) {
+	var filteredWords []infrastructure.WordWithHintJSON
 
 	for _, word := range words {
 		wordLength := utf8.RuneCountInString(word.WordData)

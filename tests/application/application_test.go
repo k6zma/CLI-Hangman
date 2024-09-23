@@ -5,6 +5,7 @@ import (
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -52,8 +53,8 @@ func TestNewGameService(t *testing.T) {
 func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -62,7 +63,7 @@ func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "easy", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -78,8 +79,8 @@ func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -88,7 +89,7 @@ func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "medium", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -104,8 +105,8 @@ func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 func TestSelectWordByPropertiesEnHard(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -114,7 +115,7 @@ func TestSelectWordByPropertiesEnHard(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "hard", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -130,8 +131,8 @@ func TestSelectWordByPropertiesEnHard(t *testing.T) {
 func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -140,7 +141,7 @@ func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "easy", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -156,8 +157,8 @@ func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -166,7 +167,7 @@ func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "medium", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -182,8 +183,8 @@ func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 func TestSelectWordByPropertiesRuHard(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -192,7 +193,7 @@ func TestSelectWordByPropertiesRuHard(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "hard", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -205,7 +206,7 @@ func TestSelectWordByPropertiesRuHard(t *testing.T) {
 // - Language: en.
 // - Difficulty: impossible.
 func TestInvalidDifficultyEn(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
@@ -221,7 +222,7 @@ func TestInvalidDifficultyEn(t *testing.T) {
 // - Language: en.
 // - Difficulty: невозможно.
 func TestInvalidDifficultyRu(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
@@ -237,7 +238,7 @@ func TestInvalidDifficultyRu(t *testing.T) {
 // - Language: en.
 // - Difficulty: hard.
 func TestNoWordsForDifficultyEn(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
@@ -253,7 +254,7 @@ func TestNoWordsForDifficultyEn(t *testing.T) {
 // - Language: ru.
 // - Difficulty: hard.
 func TestNoWordsForDifficultyRu(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
@@ -271,7 +272,7 @@ func TestNoWordsForDifficultyRu(t *testing.T) {
 func TestStartGameSession(t *testing.T) {
 	gameService := application.NewGameService()
 
-	selectedWord := domain.WordWithHintJSON{
+	selectedWord := infrastructure.WordWithHintJSON{
 		WordData: "lime",
 		Hint:     "green citrus fruit used in cocktails and cooking",
 	}
