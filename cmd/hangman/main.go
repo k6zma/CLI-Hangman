@@ -1,17 +1,19 @@
 package main
 
 import (
+	"flag"
 	"os"
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 )
 
 func main() {
-	wordsFilename := "words.json"
+	jsonPath := flag.String("jsonPath", "words.json", "path to JSON with words")
+	flag.Parse()
 
 	gameService := application.NewGameService()
 
-	err := gameService.StartGame(wordsFilename)
+	err := gameService.StartGame(*jsonPath)
 	if err != nil {
 		os.Exit(0)
 	}

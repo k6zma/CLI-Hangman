@@ -118,19 +118,19 @@ The value is an array containing two fields:
 
 1. **Checking custom errors:**
 
-    Tests check the correct handling of errors that occur during the operation of the application
+   Tests check the correct handling of errors that occur during the operation of the application
 
 2. **Checking word choice by language and difficulty:**
 
-    Tests check that the words are chosen correctly depending on the game parameters
+   Tests check that the words are chosen correctly depending on the game parameters
 
 3. **Gameplay check**:
 
-    Tests check the correct operation of the game logic
+   Tests check the correct operation of the game logic
 
 4. **Checking data loading**:
 
-    Tests check the correctness of loading words from JSON files
+   Tests check the correctness of loading words from JSON files
 
 ## Rules of the game
 
@@ -144,3 +144,14 @@ The value is an array containing two fields:
 ## Example of working
 
 [Example of working](https://vimeo.com/1010568935)
+
+## Usage:
+1) Build the project:
+```shell
+make build
+```
+
+2) Run the project with cli-arguments:
+```shell
+./bin/hangman --jsonPath="words.json"
+```
