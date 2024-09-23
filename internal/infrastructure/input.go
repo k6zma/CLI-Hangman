@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"crypto/rand"
 	"fmt"
+	"log/slog"
 	"math/big"
 	"os"
 	"strconv"
@@ -22,6 +23,7 @@ import (
 func inputLanguage() (string, error) {
 	var language string
 	if _, err := fmt.Scanln(&language); err != nil {
+		slog.Error("invalid input for language", slog.String("error", err.Error()))
 		return "", NewInputLanguageError()
 	}
 
@@ -48,6 +50,7 @@ func inputDifficulty() (string, error) {
 		if err.Error() == "unexpected newline" {
 			difficulty = ""
 		} else {
+			slog.Error("invalid input for difficulty", slog.String("error", err.Error()))
 			return "", fmt.Errorf("error scanning input: %w", err)
 		}
 	}
@@ -66,6 +69,7 @@ func inputDifficulty() (string, error) {
 		randomIndex, err := rand.Int(rand.Reader, maxIndex)
 
 		if err != nil {
+			slog.Error("generated random index doesn't happened", slog.String("error", err.Error()))
 			return "", fmt.Errorf("error generating random index: %w", err)
 		}
 

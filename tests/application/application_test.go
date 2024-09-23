@@ -3,10 +3,11 @@ package application_test
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
-	"github.com/stretchr/testify/assert"
 )
 
 // --------------------------------

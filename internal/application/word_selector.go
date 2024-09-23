@@ -3,6 +3,7 @@ package application
 import (
 	"crypto/rand"
 	"fmt"
+	"log/slog"
 	"math/big"
 	"unicode/utf8"
 
@@ -50,6 +51,7 @@ func SelectWordByDifficulty(words []infrastructure.WordWithHintJSON, difficulty 
 	randomIndex, err := rand.Int(rand.Reader, maxIndex)
 
 	if err != nil {
+		slog.Error("failed to generate random index", slog.String("error", err.Error()))
 		return nil, fmt.Errorf("error generating random index: %w", err)
 	}
 

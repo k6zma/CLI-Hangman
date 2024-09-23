@@ -2,6 +2,7 @@ package application
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
@@ -135,14 +136,14 @@ func (s *GameService) RunGameLoop(game *domain.Game) error {
 
 		letter, err := infrastructure.GetLetterFromUser()
 		if err != nil {
-			fmt.Println("Error:", err)
+			slog.Error("failed to get letter from user", slog.String("error", err.Error()))
 			continue
 		}
 
 		if game.GuessLetter(letter) {
-			fmt.Println("Correct letter guess!")
+			slog.Info("correct letter guess", slog.String("letter", string(letter)))
 		} else {
-			fmt.Println("Wrong letter guess!")
+			slog.Info("wrong letter guess", slog.String("letter", string(letter)))
 		}
 	}
 
@@ -156,6 +157,7 @@ func (s *GameService) RunGameLoop(game *domain.Game) error {
 	} else {
 		wordLetters, err := game.GetWordLetters()
 		if err != nil {
+			slog.Error("failed to get word letters", slog.String("error", err.Error()))
 			return err
 		}
 

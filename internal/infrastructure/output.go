@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"time"
 	"unicode"
@@ -86,7 +87,7 @@ func HangmanIntro() {
 			break
 		}
 
-		fmt.Println("Error:", err)
+		slog.Error("happened error while collecting the agreement", slog.String("error", err.Error()))
 	}
 }
 
@@ -97,13 +98,13 @@ func HangmanIntro() {
 func PrintWordState(game *domain.Game) {
 	wordLetters, err := game.GetWordLetters()
 	if err != nil {
-		fmt.Println("Error getting word letters:", err)
+		slog.Error("error getting word letters", slog.String("error", err.Error()))
 		return
 	}
 
 	guessedLetters, err := game.GetGuessedLetters()
 	if err != nil {
-		fmt.Println("Error getting guessed letters:", err)
+		slog.Error("error getting guessed letters", slog.String("error", err.Error()))
 		return
 	}
 
@@ -231,12 +232,12 @@ func PrintHangman(game *domain.Game) {
 func PrintHint(game *domain.Game) {
 	currentAttempts, err := game.GetCurrentAttempts()
 	if err != nil {
-		fmt.Println("Error getting current attempts:", err)
+		slog.Error("error getting current attempts", slog.String("error", err.Error()))
 	}
 
 	maxAttempts, err := game.GetMaxAttempts()
 	if err != nil {
-		fmt.Println("Error getting max attempts:", err)
+		slog.Error("error getting max attempts", slog.String("error", err.Error()))
 	}
 
 	if float64(*currentAttempts)/float64(*maxAttempts) >= 0.8 {

@@ -2,12 +2,16 @@ package main
 
 import (
 	"flag"
+	"log/slog"
 	"os"
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 )
 
 func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{}))
+	slog.SetDefault(logger)
+
 	jsonPath := flag.String("jsonPath", "words.json", "path to JSON with words")
 	flag.Parse()
 

@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
 )
@@ -68,11 +69,13 @@ func NewParsedWords(enWords, ruWords []WordWithHintJSON) *ParsedWords {
 func LoadWords(filename string) (*ParsedWords, error) {
 	jsonData, err := utils.ReadJSON(filename)
 	if err != nil {
+		slog.Error("failed to read json file", slog.String("filename", filename), slog.String("error", err.Error()))
 		return nil, fmt.Errorf("failed to read json: %w", err)
 	}
 
 	var parsedWords ParsedWords
 	if err := json.Unmarshal(jsonData, &parsedWords); err != nil {
+		slog.Error("failed to unmarshal json", slog.String("filename", filename), slog.String("error", err.Error()))
 		return nil, fmt.Errorf("failed to parse(unmarshall) json: %w", err)
 	}
 
