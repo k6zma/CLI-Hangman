@@ -30,10 +30,8 @@ func inputLanguage() (string, error) {
 	language = strings.ToLower(language)
 
 	switch language {
-	case "russian", "ru", "ру", "русский":
-		return "ru", nil
-	case "english", "en", "англ", "английский":
-		return "en", nil
+	case "ru", "en":
+		return language, nil
 	default:
 		return "", NewInputLanguageError()
 	}
@@ -59,12 +57,8 @@ func inputDifficulty() (string, error) {
 	difficulty = strings.ToLower(difficulty)
 
 	switch difficulty {
-	case "easy", "изи", "легкий":
-		return "easy", nil
-	case "medium", "средний":
-		return "medium", nil
-	case "hard", "хард", "сложный":
-		return "hard", nil
+	case "easy", "medium", "hard":
+		return difficulty, nil
 	case "":
 		difficulties := []string{"easy", "medium", "hard"}
 
