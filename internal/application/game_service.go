@@ -66,14 +66,14 @@ func (s *GameService) SelectWordByProperties(wD *domain.ParsedWords, gP *domain.
 
 	var selectedWords []domain.WordWithHintJSON
 
-	switch language {
+	switch *language {
 	case "en":
 		selectedWords = wD.EnWords
 	case "ru":
 		selectedWords = wD.RuWords
 	}
 
-	selectedWord, err := SelectWordByDifficulty(selectedWords, difficulty)
+	selectedWord, err := SelectWordByDifficulty(selectedWords, *difficulty)
 	if err != nil {
 		return nil, err
 	}
@@ -106,8 +106,8 @@ func (s *GameService) StartGameSession(selectedWord *domain.WordWithHintJSON, ga
 		return nil, NewGamePropertiesCollectingError("failed to get max attempts")
 	}
 
-	word := domain.NewWord(*selectedWord, language, difficulty)
-	game := domain.NewGame(word, maxAttempts)
+	word := domain.NewWord(*selectedWord, *language, *difficulty)
+	game := domain.NewGame(word, *maxAttempts)
 
 	return game, nil
 }

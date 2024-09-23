@@ -92,28 +92,28 @@ func (w *Word) GetLetters() ([]rune, error) {
 }
 
 // GetLanguage returns the language of the word.
-func (w *Word) GetLanguage() (string, error) {
+func (w *Word) GetLanguage() (*string, error) {
 	if w.language == "" {
-		return "", NewGetFieldsOfWordError("language was not set")
+		return nil, NewGetFieldsOfWordError("language was not set")
 	}
 
-	return w.language, nil
+	return &w.language, nil
 }
 
 // GetDifficulty returns the difficulty of the word.
-func (w *Word) GetDifficulty() (string, error) {
+func (w *Word) GetDifficulty() (*string, error) {
 	if w.difficulty == "" {
-		return "", NewGetFieldsOfWordError("difficulty was not set")
+		return nil, NewGetFieldsOfWordError("difficulty was not set")
 	}
 
-	return w.difficulty, nil
+	return &w.difficulty, nil
 }
 
 // GetHint returns the hint associated with the word.
-func (w *Word) GetHint() (string, error) {
+func (w *Word) GetHint() (*string, error) {
 	if w.hint == "" {
-		return "", NewGetFieldsOfWordError("hint was not set")
+		return nil, NewGetFieldsOfWordError("hint was not set")
 	}
 
-	return w.hint, nil
+	return &w.hint, nil
 }

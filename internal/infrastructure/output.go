@@ -133,7 +133,7 @@ func PrintAvailableLetters(game *domain.Game) {
 		return
 	}
 
-	if language == "en" {
+	if *language == "en" {
 		alphabet = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	} else {
 		alphabet = []rune("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ")
@@ -214,7 +214,7 @@ func PrintHangman(game *domain.Game) {
 		return
 	}
 
-	percentage := float64(currentAttempts) / float64(maxAttempts)
+	percentage := float64(*currentAttempts) / float64(*maxAttempts)
 	stageIndex := int(percentage * float64(len(stages)-1))
 
 	if stageIndex >= len(stages) {
@@ -239,9 +239,9 @@ func PrintHint(game *domain.Game) {
 		fmt.Println("Error getting max attempts:", err)
 	}
 
-	if float64(currentAttempts)/float64(maxAttempts) >= 0.8 {
+	if float64(*currentAttempts)/float64(*maxAttempts) >= 0.8 {
 		hint, _ := game.GetWordHint()
-		fmt.Println("Hint:", hint)
+		fmt.Println("Hint:", *hint)
 	}
 }
 

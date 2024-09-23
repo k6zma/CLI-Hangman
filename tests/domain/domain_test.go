@@ -57,7 +57,7 @@ func TestNewGameEn(t *testing.T) {
 	maxAttempts, err := game.GetMaxAttempts()
 
 	assert.NoError(t, err)
-	assert.Equal(t, 5, maxAttempts)
+	assert.Equal(t, 5, *maxAttempts)
 }
 
 // Creating game with russian word.
@@ -75,7 +75,7 @@ func TestNewGameRu(t *testing.T) {
 	maxAttempts, err := game.GetMaxAttempts()
 
 	assert.NoError(t, err)
-	assert.Equal(t, 5, maxAttempts)
+	assert.Equal(t, 5, *maxAttempts)
 }
 
 // -------------------------------
@@ -202,7 +202,7 @@ func TestGetWordHintEn(t *testing.T) {
 	hint, err := game.GetWordHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "green citrus fruit used in cocktails and cooking", hint)
+	assert.Equal(t, "green citrus fruit used in cocktails and cooking", *hint)
 }
 
 // Checking whether the word hint is correct in russian.
@@ -218,7 +218,7 @@ func TestGetWordHintRu(t *testing.T) {
 	hint, err := game.GetWordHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", hint)
+	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", *hint)
 }
 
 // Checking for correct storage of already guessed letters in english.
@@ -318,17 +318,17 @@ func TestNewWordEn(t *testing.T) {
 	language, err := word.GetLanguage()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "en", language)
+	assert.Equal(t, "en", *language)
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "easy", difficulty)
+	assert.Equal(t, "easy", *difficulty)
 
 	hint, err := word.GetHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "green citrus fruit used in cocktails and cooking", hint)
+	assert.Equal(t, "green citrus fruit used in cocktails and cooking", *hint)
 }
 
 // Multilayer NewWord constructor validation in russian.
@@ -346,17 +346,17 @@ func TestNewWordRu(t *testing.T) {
 	language, err := word.GetLanguage()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "ru", language)
+	assert.Equal(t, "ru", *language)
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "easy", difficulty)
+	assert.Equal(t, "easy", *difficulty)
 
 	hint, err := word.GetHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", hint)
+	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", *hint)
 }
 
 // -------------------------------------
