@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
-
 	"os"
+
+	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
 )
 
 func main() {

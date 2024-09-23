@@ -1,11 +1,11 @@
 package application
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-
 	"crypto/rand"
 	"math/big"
 	"unicode/utf8"
+
+	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 )
 
 // SelectWordByDifficulty filters words based on difficulty and returns a random word.

@@ -2,17 +2,16 @@ package infrastructure
 
 import (
 	"bufio"
+	"crypto/rand"
+	"fmt"
+	"math/big"
 	"os"
+	"strconv"
+	"strings"
 	"unicode/utf8"
 
 	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
 	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
-
-	"crypto/rand"
-	"fmt"
-	"math/big"
-	"strconv"
-	"strings"
 )
 
 // inputLanguage collect the user input the game language.
