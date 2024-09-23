@@ -1,5 +1,15 @@
 package infrastructure
 
+// Сonstants with error texts.
+const (
+	ErrWordLoading          = "error loading words"
+	ErrLanguageInput        = "invalid language input"
+	ErrDifficultyInput      = "invalid difficulty input"
+	ErrInputMaxAttempts     = "invalid max attempts input"
+	ErrInputRulesSuggestion = "invalid rules suggestion input"
+	ErrLetterInput          = "invalid letter input"
+)
+
 // WordLoaderError defines a custom error of word loading.
 //
 // Fields:
@@ -10,14 +20,11 @@ type WordLoaderError struct {
 
 // NewWordLoaderError is constructor which creates and returns a new WordLoaderError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of WordLoaderError.
-func NewWordLoaderError(message string) error {
+func NewWordLoaderError() error {
 	return &WordLoaderError{
-		message: message,
+		message: ErrWordLoading,
 	}
 }
 
@@ -35,14 +42,11 @@ type InputLanguageError struct {
 
 // NewInputLanguageError is a constructor that creates and returns a new InputLanguageError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of InputLanguageError.
-func NewInputLanguageError(message string) error {
+func NewInputLanguageError() error {
 	return &InputLanguageError{
-		message: message,
+		message: ErrLanguageInput,
 	}
 }
 
@@ -60,14 +64,11 @@ type InputDifficultyError struct {
 
 // NewInputDifficultyError is a constructor that creates and returns a new InputDifficultyError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of InputDifficultyError.
-func NewInputDifficultyError(message string) error {
+func NewInputDifficultyError() error {
 	return &InputDifficultyError{
-		message: message,
+		message: ErrDifficultyInput,
 	}
 }
 
@@ -85,14 +86,11 @@ type InputMaxAttemptsError struct {
 
 // NewInputMaxAttemptsError is a constructor that creates and returns a new InputMaxAttemptsError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of InputMaxAttemptsError.
-func NewInputMaxAttemptsError(message string) error {
+func NewInputMaxAttemptsError() error {
 	return &InputMaxAttemptsError{
-		message: message,
+		message: ErrInputMaxAttempts,
 	}
 }
 
@@ -110,14 +108,11 @@ type InputRulesSuggestionError struct {
 
 // NewInputRulesSuggestionError is a constructor that creates and returns a new InputRulesSuggestionError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of InputRulesSuggestionError.
-func NewInputRulesSuggestionError(message string) error {
+func NewInputRulesSuggestionError() error {
 	return &InputRulesSuggestionError{
-		message: message,
+		message: ErrInputRulesSuggestion,
 	}
 }
 
@@ -135,14 +130,11 @@ type InputLetterError struct {
 
 // NewInputLetterError is a constructor that creates and returns a new InputLetterError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of InputLetterError.
-func NewInputLetterError(message string) error {
+func NewInputLetterError() error {
 	return &InputLetterError{
-		message: message,
+		message: ErrLetterInput,
 	}
 }
 

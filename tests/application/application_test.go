@@ -15,23 +15,23 @@ import (
 
 // WordSelectorError error type checking.
 func TestWordSelectorError(t *testing.T) {
-	err := application.NewWordSelectorError("failed to select the word")
+	err := application.NewWordSelectorError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to select the word", err.Error())
+	assert.Equal(t, "error during word selection based on difficulty", err.Error())
 }
 
 // WordsLoadingError error type checking.
 func TestWordsLoadingError(t *testing.T) {
-	err := application.NewWordsLoadingError("failed to load words")
+	err := application.NewWordsLoadingError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to load words", err.Error())
+	assert.Equal(t, "error during words loading", err.Error())
 }
 
 // GamePropertiesCollectingError error type checking.
 func TestGamePropertiesCollectingError(t *testing.T) {
-	err := application.NewGamePropertiesCollectingError("failed to collect game properties")
+	err := application.NewGamePropertiesCollectingError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to collect game properties", err.Error())
+	assert.Equal(t, "error during game properties getting", err.Error())
 }
 
 // --------------------------------
@@ -213,7 +213,7 @@ func TestInvalidDifficultyEn(t *testing.T) {
 	selectedWord, err := application.SelectWordByDifficulty(words, "impossible")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "invalid difficulty level")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection using wrong difficulty.
@@ -229,7 +229,7 @@ func TestInvalidDifficultyRu(t *testing.T) {
 	selectedWord, err := application.SelectWordByDifficulty(words, "невозомжно")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "invalid difficulty level")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection where there are no words for the required complexity.
@@ -245,7 +245,7 @@ func TestNoWordsForDifficultyEn(t *testing.T) {
 	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "no words found for the selected difficulty")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection where there are no words for the required complexity.
@@ -261,7 +261,7 @@ func TestNoWordsForDifficultyRu(t *testing.T) {
 	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "no words found for the selected difficulty")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // --------------------------------

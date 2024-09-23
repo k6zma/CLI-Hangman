@@ -2,6 +2,7 @@ package application
 
 import (
 	"crypto/rand"
+	"fmt"
 	"math/big"
 	"unicode/utf8"
 
@@ -37,19 +38,19 @@ func SelectWordByDifficulty(words []infrastructure.WordWithHintJSON, difficulty 
 				filteredWords = append(filteredWords, word)
 			}
 		default:
-			return nil, NewWordSelectorError("invalid difficulty level")
+			return nil, NewWordSelectorError()
 		}
 	}
 
 	if len(filteredWords) == 0 {
-		return nil, NewWordSelectorError("no words found for the selected difficulty")
+		return nil, NewWordSelectorError()
 	}
 
 	maxIndex := big.NewInt(int64(len(filteredWords)))
 	randomIndex, err := rand.Int(rand.Reader, maxIndex)
 
 	if err != nil {
-		return nil, NewWordSelectorError("error generating random index")
+		return nil, fmt.Errorf("error generating random index: %w", err)
 	}
 
 	return &filteredWords[randomIndex.Int64()], nil

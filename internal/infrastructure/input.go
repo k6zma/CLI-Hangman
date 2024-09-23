@@ -22,7 +22,7 @@ import (
 func inputLanguage() (string, error) {
 	var language string
 	if _, err := fmt.Scanln(&language); err != nil {
-		return "", NewInputLanguageError("error with scan line")
+		return "", NewInputLanguageError()
 	}
 
 	language = strings.TrimSpace(language)
@@ -35,7 +35,7 @@ func inputLanguage() (string, error) {
 	case "english", "en", "англ", "английский":
 		return "en", nil
 	default:
-		return "", NewInputLanguageError("wrong language entered")
+		return "", NewInputLanguageError()
 	}
 }
 
@@ -50,7 +50,7 @@ func inputDifficulty() (string, error) {
 		if err.Error() == "unexpected newline" {
 			difficulty = ""
 		} else {
-			return "", NewInputDifficultyError("error with scan line")
+			return "", fmt.Errorf("error scanning input: %w", err)
 		}
 	}
 
@@ -72,14 +72,14 @@ func inputDifficulty() (string, error) {
 		randomIndex, err := rand.Int(rand.Reader, maxIndex)
 
 		if err != nil {
-			return "", NewInputDifficultyError("error generating random difficulty")
+			return "", fmt.Errorf("error generating random index: %w", err)
 		}
 
 		randomDifficulty := difficulties[randomIndex.Int64()]
 
 		return randomDifficulty, nil
 	default:
-		return "", NewInputDifficultyError("wrong difficulty entered")
+		return "", NewInputDifficultyError()
 	}
 }
 
@@ -91,15 +91,15 @@ func inputDifficulty() (string, error) {
 func inputMaxAttempts() (int, error) {
 	var attemptsStr string
 	if _, err := fmt.Scanln(&attemptsStr); err != nil {
-		return -1, NewInputMaxAttemptsError("error with scan line")
+		return -1, fmt.Errorf("error scanning input: %w", err)
 	}
 
 	maxAttempts, _ := strconv.Atoi(attemptsStr)
 
 	if maxAttempts <= 0 {
-		return -1, NewInputMaxAttemptsError("the number of maximum attempts must be greater than 0")
+		return -1, NewInputMaxAttemptsError()
 	} else if maxAttempts >= 100 {
-		return -1, NewInputMaxAttemptsError("the number of maximum attempts must be less than 100")
+		return -1, NewInputMaxAttemptsError()
 	}
 
 	return maxAttempts, nil
@@ -173,7 +173,7 @@ func RequestGameProperties() *domain.GameProperties {
 func AcceptTheRules() (bool, error) {
 	var input string
 	if _, err := fmt.Scanln(&input); err != nil {
-		return false, NewInputRulesSuggestionError("error with input suggestion")
+		return false, NewInputRulesSuggestionError()
 	}
 
 	input = strings.ToLower(input)
@@ -184,7 +184,7 @@ func AcceptTheRules() (bool, error) {
 	case "disagree":
 		return false, nil
 	default:
-		return false, NewInputRulesSuggestionError("you entered an unknown word")
+		return false, NewInputRulesSuggestionError()
 	}
 }
 
@@ -219,7 +219,7 @@ func GetLetterFromUser() (rune, error) {
 
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("error reading input: %w", err)
 	}
 
 	input = strings.TrimSpace(input)
@@ -227,12 +227,12 @@ func GetLetterFromUser() (rune, error) {
 	input = strings.ToLower(input)
 
 	if utf8.RuneCountInString(input) != 1 {
-		return 0, NewInputLetterError("please enter only one letter")
+		return 0, NewInputLetterError()
 	}
 
 	letter, _ := utf8.DecodeRuneInString(input)
 	if !isLetter(letter) {
-		return 0, NewInputLetterError("please enter a valid letter")
+		return 0, NewInputLetterError()
 	}
 
 	return letter, nil

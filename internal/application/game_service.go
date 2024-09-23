@@ -31,7 +31,7 @@ func convertToDomainWord(jsonData infrastructure.WordWithHintJSON, language, dif
 func (s *GameService) LoadWords(wordsFilename string) (*infrastructure.ParsedWords, error) {
 	wordsData, err := infrastructure.LoadWords(wordsFilename)
 	if err != nil {
-		return nil, NewWordsLoadingError("error while loading the words")
+		return nil, fmt.Errorf("loading words: %w", err)
 	}
 
 	return wordsData, nil
@@ -98,17 +98,17 @@ func (s *GameService) SelWordByPr(wD *infrastructure.ParsedWords, gP *domain.Gam
 func (s *GameService) StartGameSession(sW *infrastructure.WordWithHintJSON, gP *domain.GameProperties) (*domain.Game, error) {
 	language, err := gP.GetLanguageFromProperties()
 	if err != nil {
-		return nil, NewGamePropertiesCollectingError("failed to get language")
+		return nil, NewGamePropertiesCollectingError()
 	}
 
 	difficulty, err := gP.GetDifficultyFromProperties()
 	if err != nil {
-		return nil, NewGamePropertiesCollectingError("failed to get difficulty")
+		return nil, NewGamePropertiesCollectingError()
 	}
 
 	maxAttempts, err := gP.GetMaxAttemptsFromProperties()
 	if err != nil {
-		return nil, NewGamePropertiesCollectingError("failed to get max attempts")
+		return nil, NewGamePropertiesCollectingError()
 	}
 
 	word := convertToDomainWord(*sW, *language, *difficulty)

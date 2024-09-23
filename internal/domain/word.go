@@ -35,7 +35,7 @@ func NewWord(wordData, hint, language, difficulty string) *Word {
 // GetLetters returns the letters (runes) of the word.
 func (w *Word) GetLetters() ([]rune, error) {
 	if len(w.letters) == 0 {
-		return nil, NewGetFieldsOfWordError("letters fields are empty")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return w.letters, nil
@@ -44,7 +44,7 @@ func (w *Word) GetLetters() ([]rune, error) {
 // GetLanguage returns the language of the word.
 func (w *Word) GetLanguage() (*string, error) {
 	if w.language == "" {
-		return nil, NewGetFieldsOfWordError("language was not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return &w.language, nil
@@ -53,7 +53,7 @@ func (w *Word) GetLanguage() (*string, error) {
 // GetDifficulty returns the difficulty of the word.
 func (w *Word) GetDifficulty() (*string, error) {
 	if w.difficulty == "" {
-		return nil, NewGetFieldsOfWordError("difficulty was not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return &w.difficulty, nil
@@ -62,7 +62,7 @@ func (w *Word) GetDifficulty() (*string, error) {
 // GetHint returns the hint associated with the word.
 func (w *Word) GetHint() (*string, error) {
 	if w.hint == "" {
-		return nil, NewGetFieldsOfWordError("hint was not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return &w.hint, nil

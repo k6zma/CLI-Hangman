@@ -1,5 +1,12 @@
 package application
 
+// Сonstants with error texts.
+const (
+	ErrWordSelection            = "error during word selection based on difficulty"
+	ErrWordsLoading             = "error during words loading"
+	ErrGamePropertiesCollecting = "error during game properties getting"
+)
+
 // WordSelectorError defines a custom error for issues during word selection based on difficulty.
 //
 // Fields:
@@ -10,14 +17,11 @@ type WordSelectorError struct {
 
 // NewWordSelectorError is a constructor that creates and returns a new WordSelectorError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of WordSelectorError.
-func NewWordSelectorError(message string) error {
+func NewWordSelectorError() error {
 	return &WordSelectorError{
-		message: message,
+		message: ErrWordSelection,
 	}
 }
 
@@ -35,14 +39,11 @@ type WordsLoadingError struct {
 
 // NewWordsLoadingError is a constructor that creates and returns a new WordsLoadingError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of WordsLoadingError.
-func NewWordsLoadingError(message string) error {
+func NewWordsLoadingError() error {
 	return &WordsLoadingError{
-		message: message,
+		message: ErrWordsLoading,
 	}
 }
 
@@ -60,14 +61,11 @@ type GamePropertiesCollectingError struct {
 
 // NewGamePropertiesCollectingError is a constructor that creates and returns a new GamePropertiesCollectingError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of GamePropertiesCollectingError.
-func NewGamePropertiesCollectingError(message string) error {
+func NewGamePropertiesCollectingError() error {
 	return &GamePropertiesCollectingError{
-		message: message,
+		message: ErrGamePropertiesCollecting,
 	}
 }
 

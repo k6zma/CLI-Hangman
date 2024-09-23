@@ -14,7 +14,7 @@ import (
 
 // GetFieldsOfWordError error type checking.
 func TestNewGetFieldsOfWordError(t *testing.T) {
-	err := domain.NewGetFieldsOfWordError("error while getting fields of the word")
+	err := domain.NewGetFieldsOfWordError()
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "error while getting fields of the word", err.Error())
@@ -22,7 +22,7 @@ func TestNewGetFieldsOfWordError(t *testing.T) {
 
 // GetFieldsOfGamePropertiesError error type checking.
 func TestNewGetFieldsOfGamePropertiesError(t *testing.T) {
-	err := domain.NewGetFieldsOfGamePropertiesError("error while getting fields of the game properties")
+	err := domain.NewGetFieldsOfGamePropertiesError()
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "error while getting fields of the game properties", err.Error())
@@ -30,18 +30,18 @@ func TestNewGetFieldsOfGamePropertiesError(t *testing.T) {
 
 // NewGameError error type checking.
 func TestMakeNewGameError(t *testing.T) {
-	err := domain.MakeNewGameError("new game error")
+	err := domain.MakeNewGameError()
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "new game error", err.Error())
+	assert.Equal(t, "error while initializing a new game", err.Error())
 }
 
 // GetFieldsOfGameError error type checking.
 func TestNewGetFieldsOfGameError(t *testing.T) {
-	err := domain.NewGetFieldsOfGameError("error while getting fields of the game struct")
+	err := domain.NewGetFieldsOfGameError()
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "error while getting fields of the game struct", err.Error())
+	assert.Equal(t, "error while getting fields of the game", err.Error())
 }
 
 // --------------------------------
@@ -335,7 +335,7 @@ func TestGetLettersEmptyWordEn(t *testing.T) {
 
 	assert.Nil(t, letters)
 	assert.Error(t, err)
-	assert.Equal(t, "letters fields are empty", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the word is not specified or empty in russian.
@@ -346,7 +346,7 @@ func TestGetLettersEmptyWordRu(t *testing.T) {
 
 	assert.Nil(t, letters)
 	assert.Error(t, err)
-	assert.Equal(t, "letters fields are empty", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the language is not specified or is empty in english.
@@ -357,7 +357,7 @@ func TestGetLanguageEmptyEn(t *testing.T) {
 
 	assert.Empty(t, language)
 	assert.Error(t, err)
-	assert.Equal(t, "language was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the language is not specified or is empty in russian.
@@ -368,7 +368,7 @@ func TestGetLanguageEmptyRu(t *testing.T) {
 
 	assert.Empty(t, language)
 	assert.Error(t, err)
-	assert.Equal(t, "language was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the difficulty is not specified or is empty in english.
@@ -379,7 +379,7 @@ func TestGetDifficultyEmptyEn(t *testing.T) {
 
 	assert.Empty(t, difficulty)
 	assert.Error(t, err)
-	assert.Equal(t, "difficulty was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the difficulty is not specified or is empty in russian.
@@ -390,7 +390,7 @@ func TestGetDifficultyEmptyRu(t *testing.T) {
 
 	assert.Empty(t, difficulty)
 	assert.Error(t, err)
-	assert.Equal(t, "difficulty was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the hint is not specified or is empty in english.
@@ -401,7 +401,7 @@ func TestGetHintEmptyEn(t *testing.T) {
 
 	assert.Empty(t, hint)
 	assert.Error(t, err)
-	assert.Equal(t, "hint was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the hint is not specified or is empty in russian.
@@ -412,5 +412,5 @@ func TestGetHintEmptyRu(t *testing.T) {
 
 	assert.Empty(t, hint)
 	assert.Error(t, err)
-	assert.Equal(t, "hint was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
