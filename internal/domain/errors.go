@@ -1,5 +1,13 @@
 package domain
 
+// Сonstants with error texts.
+const (
+	ErrGetFieldsOfWord           = "error while getting fields of the word"
+	ErrGetFieldsOfGameProperties = "error while getting fields of the game properties"
+	ErrNewGame                   = "error while initializing a new game"
+	ErrGetFieldsOfGame           = "error while getting fields of the game"
+)
+
 // GetFieldsOfWordError defines a custom error for issues when retrieving fields from the Word struct.
 //
 // Fields:
@@ -10,14 +18,11 @@ type GetFieldsOfWordError struct {
 
 // NewGetFieldsOfWordError is a constructor that creates and returns a new GetFieldsOfWordError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of GetFieldsOfWordError.
-func NewGetFieldsOfWordError(message string) error {
+func NewGetFieldsOfWordError() error {
 	return &GetFieldsOfWordError{
-		message: message,
+		message: ErrGetFieldsOfWord,
 	}
 }
 
@@ -35,14 +40,11 @@ type GetFieldsOfGamePropertiesError struct {
 
 // NewGetFieldsOfGamePropertiesError is a constructor that creates and returns a new GetFieldsOfGamePropertiesError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of GetFieldsOfGamePropertiesError.
-func NewGetFieldsOfGamePropertiesError(message string) error {
+func NewGetFieldsOfGamePropertiesError() error {
 	return &GetFieldsOfGamePropertiesError{
-		message: message,
+		message: ErrGetFieldsOfGameProperties,
 	}
 }
 
@@ -60,14 +62,11 @@ type NewGameError struct {
 
 // MakeNewGameError is a constructor that creates and returns a new NewGameError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of NewGameError.
-func MakeNewGameError(message string) error {
+func MakeNewGameError() error {
 	return &NewGameError{
-		message: message,
+		message: ErrNewGame,
 	}
 }
 
@@ -85,14 +84,11 @@ type GetFieldsOfGameError struct {
 
 // NewGetFieldsOfGameError is a constructor that creates and returns a new GetFieldsOfGameError.
 //
-// Parameters:
-// - message: a string containing the error message.
-//
 // Function returns:
 // - error: a new instance of GetFieldsOfWordError.
-func NewGetFieldsOfGameError(message string) error {
+func NewGetFieldsOfGameError() error {
 	return &GetFieldsOfGameError{
-		message: message,
+		message: ErrGetFieldsOfGame,
 	}
 }
 

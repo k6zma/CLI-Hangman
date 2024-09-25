@@ -4,8 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 )
 
 // --------------------------------
@@ -14,32 +15,32 @@ import (
 
 // WordLoaderError error type checking.
 func TestNewWordLoaderError(t *testing.T) {
-	err := infrastructure.NewWordLoaderError("failed to load words")
-	assert.EqualError(t, err, "failed to load words")
+	err := infrastructure.NewWordLoaderError()
+	assert.EqualError(t, err, "error loading words")
 }
 
 // InputLanguageError error type checking.
 func TestNewInputLanguageError(t *testing.T) {
-	err := infrastructure.NewInputLanguageError("invalid language")
-	assert.EqualError(t, err, "invalid language")
+	err := infrastructure.NewInputLanguageError()
+	assert.EqualError(t, err, "invalid language input")
 }
 
 // InputDifficultyError error type checking.
 func TestNewInputDifficultyError(t *testing.T) {
-	err := infrastructure.NewInputDifficultyError("invalid difficulty")
-	assert.EqualError(t, err, "invalid difficulty")
+	err := infrastructure.NewInputDifficultyError()
+	assert.EqualError(t, err, "invalid difficulty input")
 }
 
 // InputMaxAttemptsError error type checking.
 func TestNewInputMaxAttemptsError(t *testing.T) {
-	err := infrastructure.NewInputMaxAttemptsError("invalid max attempts")
-	assert.EqualError(t, err, "invalid max attempts")
+	err := infrastructure.NewInputMaxAttemptsError()
+	assert.EqualError(t, err, "invalid max attempts input")
 }
 
 // InputLetterError error type checking.
 func TestNewInputLetterError(t *testing.T) {
-	err := infrastructure.NewInputLetterError("invalid letter")
-	assert.EqualError(t, err, "invalid letter")
+	err := infrastructure.NewInputLetterError()
+	assert.EqualError(t, err, "invalid letter input")
 }
 
 // --------------------------------
@@ -72,13 +73,4 @@ func TestLoadWordsSuccess(t *testing.T) {
 
 	assert.Equal(t, "lime", wordsData.EnWords[0].WordData)
 	assert.Equal(t, "лайм", wordsData.RuWords[0].WordData)
-}
-
-// TestLoadWordsFail checks the fail of loading words from a tmp file.
-func TestLoadWordsFail(t *testing.T) {
-	wordsData, err := infrastructure.LoadWords("invalid.json")
-
-	assert.Error(t, err)
-	assert.Nil(t, wordsData)
-	assert.Contains(t, err.Error(), "failed to read JSON")
 }

@@ -1,11 +1,13 @@
 package application_test
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 
-	"testing"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 )
 
 // --------------------------------
@@ -14,23 +16,23 @@ import (
 
 // WordSelectorError error type checking.
 func TestWordSelectorError(t *testing.T) {
-	err := application.NewWordSelectorError("failed to select the word")
+	err := application.NewWordSelectorError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to select the word", err.Error())
+	assert.Equal(t, "error during word selection based on difficulty", err.Error())
 }
 
 // WordsLoadingError error type checking.
 func TestWordsLoadingError(t *testing.T) {
-	err := application.NewWordsLoadingError("failed to load words")
+	err := application.NewWordsLoadingError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to load words", err.Error())
+	assert.Equal(t, "error during words loading", err.Error())
 }
 
 // GamePropertiesCollectingError error type checking.
 func TestGamePropertiesCollectingError(t *testing.T) {
-	err := application.NewGamePropertiesCollectingError("failed to collect game properties")
+	err := application.NewGamePropertiesCollectingError()
 	assert.NotNil(t, err)
-	assert.Equal(t, "failed to collect game properties", err.Error())
+	assert.Equal(t, "error during game properties getting", err.Error())
 }
 
 // --------------------------------
@@ -52,8 +54,8 @@ func TestNewGameService(t *testing.T) {
 func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -62,7 +64,7 @@ func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "easy", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -78,8 +80,8 @@ func TestSelectWordByPropertiesEnEasy(t *testing.T) {
 func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -88,7 +90,7 @@ func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "medium", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -104,8 +106,8 @@ func TestSelectWordByPropertiesEnMedium(t *testing.T) {
 func TestSelectWordByPropertiesEnHard(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		EnWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		EnWords: []infrastructure.WordWithHintJSON{
 			{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 			{WordData: "lemon", Hint: "yellow citrus fruit used in cocktails and cooking"},
 			{WordData: "tangerine", Hint: "orange small citrus fruit"},
@@ -114,7 +116,7 @@ func TestSelectWordByPropertiesEnHard(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("en", "hard", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -130,8 +132,8 @@ func TestSelectWordByPropertiesEnHard(t *testing.T) {
 func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -140,7 +142,7 @@ func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "easy", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -156,8 +158,8 @@ func TestSelectWordByPropertiesRuEasy(t *testing.T) {
 func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -166,7 +168,7 @@ func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "medium", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -182,8 +184,8 @@ func TestSelectWordByPropertiesRuMedium(t *testing.T) {
 func TestSelectWordByPropertiesRuHard(t *testing.T) {
 	gameService := application.NewGameService()
 
-	words := domain.ParsedWords{
-		RuWords: []domain.WordWithHintJSON{
+	words := infrastructure.ParsedWords{
+		RuWords: []infrastructure.WordWithHintJSON{
 			{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "лимон", Hint: "желтый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 			{WordData: "мандарин", Hint: "оранжевый маленький цитрусовый фрукт"},
@@ -192,7 +194,7 @@ func TestSelectWordByPropertiesRuHard(t *testing.T) {
 
 	gameProperties := domain.NewGameProperties("ru", "hard", 5)
 
-	selectedWord, err := gameService.SelectWordByProperties(&words, gameProperties)
+	selectedWord, err := gameService.SelWordByPr(&words, gameProperties)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, selectedWord)
@@ -205,14 +207,14 @@ func TestSelectWordByPropertiesRuHard(t *testing.T) {
 // - Language: en.
 // - Difficulty: impossible.
 func TestInvalidDifficultyEn(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
 	selectedWord, err := application.SelectWordByDifficulty(words, "impossible")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "invalid difficulty level")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection using wrong difficulty.
@@ -221,14 +223,14 @@ func TestInvalidDifficultyEn(t *testing.T) {
 // - Language: en.
 // - Difficulty: невозможно.
 func TestInvalidDifficultyRu(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
 	selectedWord, err := application.SelectWordByDifficulty(words, "невозомжно")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "invalid difficulty level")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection where there are no words for the required complexity.
@@ -237,14 +239,14 @@ func TestInvalidDifficultyRu(t *testing.T) {
 // - Language: en.
 // - Difficulty: hard.
 func TestNoWordsForDifficultyEn(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
 	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "no words found for the selected difficulty")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // Checking word selection where there are no words for the required complexity.
@@ -253,14 +255,14 @@ func TestNoWordsForDifficultyEn(t *testing.T) {
 // - Language: ru.
 // - Difficulty: hard.
 func TestNoWordsForDifficultyRu(t *testing.T) {
-	words := []domain.WordWithHintJSON{
+	words := []infrastructure.WordWithHintJSON{
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
 	selectedWord, err := application.SelectWordByDifficulty(words, "hard")
 	assert.Error(t, err)
 	assert.Nil(t, selectedWord)
-	assert.EqualError(t, err, "no words found for the selected difficulty")
+	assert.EqualError(t, err, "error during word selection based on difficulty")
 }
 
 // --------------------------------
@@ -271,7 +273,7 @@ func TestNoWordsForDifficultyRu(t *testing.T) {
 func TestStartGameSession(t *testing.T) {
 	gameService := application.NewGameService()
 
-	selectedWord := domain.WordWithHintJSON{
+	selectedWord := infrastructure.WordWithHintJSON{
 		WordData: "lime",
 		Hint:     "green citrus fruit used in cocktails and cooking",
 	}

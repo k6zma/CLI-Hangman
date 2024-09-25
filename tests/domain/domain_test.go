@@ -1,10 +1,12 @@
 package domain_test
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 
-	"testing"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 )
 
 // --------------------------------
@@ -13,7 +15,7 @@ import (
 
 // GetFieldsOfWordError error type checking.
 func TestNewGetFieldsOfWordError(t *testing.T) {
-	err := domain.NewGetFieldsOfWordError("error while getting fields of the word")
+	err := domain.NewGetFieldsOfWordError()
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "error while getting fields of the word", err.Error())
@@ -21,7 +23,7 @@ func TestNewGetFieldsOfWordError(t *testing.T) {
 
 // GetFieldsOfGamePropertiesError error type checking.
 func TestNewGetFieldsOfGamePropertiesError(t *testing.T) {
-	err := domain.NewGetFieldsOfGamePropertiesError("error while getting fields of the game properties")
+	err := domain.NewGetFieldsOfGamePropertiesError()
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "error while getting fields of the game properties", err.Error())
@@ -29,18 +31,18 @@ func TestNewGetFieldsOfGamePropertiesError(t *testing.T) {
 
 // NewGameError error type checking.
 func TestMakeNewGameError(t *testing.T) {
-	err := domain.MakeNewGameError("new game error")
+	err := domain.MakeNewGameError()
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "new game error", err.Error())
+	assert.Equal(t, "error while initializing a new game", err.Error())
 }
 
 // GetFieldsOfGameError error type checking.
 func TestNewGetFieldsOfGameError(t *testing.T) {
-	err := domain.NewGetFieldsOfGameError("error while getting fields of the game struct")
+	err := domain.NewGetFieldsOfGameError()
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "error while getting fields of the game struct", err.Error())
+	assert.Equal(t, "error while getting fields of the game", err.Error())
 }
 
 // --------------------------------
@@ -49,7 +51,7 @@ func TestNewGetFieldsOfGameError(t *testing.T) {
 
 // Creating game with english word.
 func TestNewGameEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	assert.NotNil(t, game)
@@ -57,17 +59,12 @@ func TestNewGameEn(t *testing.T) {
 	maxAttempts, err := game.GetMaxAttempts()
 
 	assert.NoError(t, err)
-	assert.Equal(t, 5, maxAttempts)
+	assert.Equal(t, 5, *maxAttempts)
 }
 
 // Creating game with russian word.
 func TestNewGameRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	assert.NotNil(t, game)
@@ -75,7 +72,7 @@ func TestNewGameRu(t *testing.T) {
 	maxAttempts, err := game.GetMaxAttempts()
 
 	assert.NoError(t, err)
-	assert.Equal(t, 5, maxAttempts)
+	assert.Equal(t, 5, *maxAttempts)
 }
 
 // -------------------------------
@@ -84,7 +81,7 @@ func TestNewGameRu(t *testing.T) {
 
 // Validation check for the correctness of the entered letter in english.
 func TestGuessLetterEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	assert.True(t, game.GuessLetter('l'))
@@ -93,12 +90,7 @@ func TestGuessLetterEn(t *testing.T) {
 
 // Validation check for the correctness of the entered letter in russian.
 func TestGuessLetterRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	assert.True(t, game.GuessLetter('л'))
@@ -107,7 +99,7 @@ func TestGuessLetterRu(t *testing.T) {
 
 // Checking the correctness of the storage of letters in english.
 func TestGetWordLettersEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	letters, err := game.GetWordLetters()
@@ -118,12 +110,7 @@ func TestGetWordLettersEn(t *testing.T) {
 
 // Checking the correctness of the storage of letters in russian.
 func TestGetWordLettersRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	letters, err := game.GetWordLetters()
@@ -138,7 +125,7 @@ func TestGetWordLettersRu(t *testing.T) {
 
 // Verifying that game end validation is correct in english.
 func TestIsGameOverEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 2)
 
 	game.GuessLetter('a')
@@ -149,12 +136,7 @@ func TestIsGameOverEn(t *testing.T) {
 
 // Verifying that game end validation is correct in russian.
 func TestIsGameOverRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 2)
 
 	game.GuessLetter('б')
@@ -165,7 +147,7 @@ func TestIsGameOverRu(t *testing.T) {
 
 // Verifying that the game win is validated correctly in english.
 func TestIsGameWonEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	game.GuessLetter('l')
@@ -178,12 +160,7 @@ func TestIsGameWonEn(t *testing.T) {
 
 // Verifying that the game win is validated correctly in russian.
 func TestIsGameWonRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	game.GuessLetter('л')
@@ -196,34 +173,29 @@ func TestIsGameWonRu(t *testing.T) {
 
 // Checking whether the word hint is correct in english.
 func TestGetWordHintEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	hint, err := game.GetWordHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "green citrus fruit used in cocktails and cooking", hint)
+	assert.Equal(t, "green citrus fruit used in cocktails and cooking", *hint)
 }
 
 // Checking whether the word hint is correct in russian.
 func TestGetWordHintRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	hint, err := game.GetWordHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", hint)
+	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", *hint)
 }
 
 // Checking for correct storage of already guessed letters in english.
 func TestGetGuessedLettersEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 	game := domain.NewGame(word, 5)
 
 	game.GuessLetter('l')
@@ -238,12 +210,7 @@ func TestGetGuessedLettersEn(t *testing.T) {
 
 // Checking for correct storage of already guessed letters in russian.
 func TestGetGuessedLettersRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "easy",
-	)
-
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 	game := domain.NewGame(word, 5)
 
 	game.GuessLetter('л')
@@ -262,7 +229,7 @@ func TestGetGuessedLettersRu(t *testing.T) {
 
 // Checks that the constructor worked and the object is not empty in english.
 func TestNewWordWithHintJSONEn(t *testing.T) {
-	wordWithHint := domain.NewWordWithHintJSON("lime", "green citrus fruit used in cocktails and cooking")
+	wordWithHint := infrastructure.NewWordWithHintJSON("lime", "green citrus fruit used in cocktails and cooking")
 
 	assert.NotNil(t, wordWithHint)
 	assert.Equal(t, "lime", wordWithHint.WordData)
@@ -271,7 +238,7 @@ func TestNewWordWithHintJSONEn(t *testing.T) {
 
 // Checks that the constructor worked and the object is not empty in russian.
 func TestNewWordWithHintJSONRu(t *testing.T) {
-	wordWithHint := domain.NewWordWithHintJSON("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии")
+	wordWithHint := infrastructure.NewWordWithHintJSON("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии")
 
 	assert.NotNil(t, wordWithHint)
 	assert.Equal(t, "лайм", wordWithHint.WordData)
@@ -284,15 +251,15 @@ func TestNewWordWithHintJSONRu(t *testing.T) {
 
 // Checking the functionality of the NewParsedWords constructor.
 func TestNewParsedWords(t *testing.T) {
-	enWords := []domain.WordWithHintJSON{
+	enWords := []infrastructure.WordWithHintJSON{
 		{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"},
 	}
 
-	ruWords := []domain.WordWithHintJSON{
+	ruWords := []infrastructure.WordWithHintJSON{
 		{WordData: "лайм", Hint: "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
 	}
 
-	parsedWords := domain.NewParsedWords(enWords, ruWords)
+	parsedWords := infrastructure.NewParsedWords(enWords, ruWords)
 
 	assert.NotNil(t, parsedWords)
 	assert.Equal(t, enWords, parsedWords.EnWords)
@@ -305,8 +272,7 @@ func TestNewParsedWords(t *testing.T) {
 
 // Multilayer NewWord constructor validation in english.
 func TestNewWordEn(t *testing.T) {
-	wordWithHint := domain.NewWordWithHintJSON("lime", "green citrus fruit used in cocktails and cooking")
-	word := domain.NewWord(*wordWithHint, "en", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "easy")
 
 	assert.NotNil(t, word)
 
@@ -318,23 +284,22 @@ func TestNewWordEn(t *testing.T) {
 	language, err := word.GetLanguage()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "en", language)
+	assert.Equal(t, "en", *language)
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "easy", difficulty)
+	assert.Equal(t, "easy", *difficulty)
 
 	hint, err := word.GetHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "green citrus fruit used in cocktails and cooking", hint)
+	assert.Equal(t, "green citrus fruit used in cocktails and cooking", *hint)
 }
 
 // Multilayer NewWord constructor validation in russian.
 func TestNewWordRu(t *testing.T) {
-	wordWithHint := domain.NewWordWithHintJSON("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии")
-	word := domain.NewWord(*wordWithHint, "ru", "easy")
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "easy")
 
 	assert.NotNil(t, word)
 
@@ -346,17 +311,17 @@ func TestNewWordRu(t *testing.T) {
 	language, err := word.GetLanguage()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "ru", language)
+	assert.Equal(t, "ru", *language)
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "easy", difficulty)
+	assert.Equal(t, "easy", *difficulty)
 
 	hint, err := word.GetHint()
 
 	assert.NoError(t, err)
-	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", hint)
+	assert.Equal(t, "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", *hint)
 }
 
 // -------------------------------------
@@ -365,96 +330,88 @@ func TestNewWordRu(t *testing.T) {
 
 // Checking the operation of the validator in the getter if the word is not specified or empty in english.
 func TestGetLettersEmptyWordEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "", Hint: "empty word"}, "en", "easy")
+	word := domain.NewWord("", "empty word", "en", "easy")
 
 	letters, err := word.GetLetters()
 
 	assert.Nil(t, letters)
 	assert.Error(t, err)
-	assert.Equal(t, "letters fields are empty", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the word is not specified or empty in russian.
 func TestGetLettersEmptyWordRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "", Hint: "пустое слово"}, "ru", "easy")
+	word := domain.NewWord("", "пустое слово", "ru", "easy")
 
 	letters, err := word.GetLetters()
 
 	assert.Nil(t, letters)
 	assert.Error(t, err)
-	assert.Equal(t, "letters fields are empty", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the language is not specified or is empty in english.
 func TestGetLanguageEmptyEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "", "easy")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "", "easy")
 
 	language, err := word.GetLanguage()
 
 	assert.Empty(t, language)
 	assert.Error(t, err)
-	assert.Equal(t, "language was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the language is not specified or is empty in russian.
 func TestGetLanguageEmptyRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"", "easy",
-	)
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "", "easy")
 
 	language, err := word.GetLanguage()
 
 	assert.Empty(t, language)
 	assert.Error(t, err)
-	assert.Equal(t, "language was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
-// Checking the operation of the validator in the getter if the complexity is not specified or is empty in english.
+// Checking the operation of the validator in the getter if the difficulty is not specified or is empty in english.
 func TestGetDifficultyEmptyEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: "green citrus fruit used in cocktails and cooking"}, "en", "")
+	word := domain.NewWord("lime", "green citrus fruit used in cocktails and cooking", "en", "")
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.Empty(t, difficulty)
 	assert.Error(t, err)
-	assert.Equal(t, "difficulty was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
-// Checking the operation of the validator in the getter if the complexity is not specified or is empty in russian.
+// Checking the operation of the validator in the getter if the difficulty is not specified or is empty in russian.
 func TestGetDifficultyEmptyRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{
-		WordData: "лайм",
-		Hint:     "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии"},
-		"ru", "",
-	)
+	word := domain.NewWord("лайм", "зеленый цитрусовый фрукт используемый в коктейлях и кулинарии", "ru", "")
 
 	difficulty, err := word.GetDifficulty()
 
 	assert.Empty(t, difficulty)
 	assert.Error(t, err)
-	assert.Equal(t, "difficulty was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the hint is not specified or is empty in english.
 func TestGetHintEmptyEn(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "lime", Hint: ""}, "en", "easy")
+	word := domain.NewWord("lime", "", "en", "easy")
 
 	hint, err := word.GetHint()
 
 	assert.Empty(t, hint)
 	assert.Error(t, err)
-	assert.Equal(t, "hint was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }
 
 // Checking the operation of the validator in the getter if the hint is not specified or is empty in russian.
 func TestGetHintEmptyRu(t *testing.T) {
-	word := domain.NewWord(domain.WordWithHintJSON{WordData: "лайм", Hint: ""}, "ru", "easy")
+	word := domain.NewWord("лайм", "", "ru", "easy")
 
 	hint, err := word.GetHint()
 
 	assert.Empty(t, hint)
 	assert.Error(t, err)
-	assert.Equal(t, "hint was not set", err.Error())
+	assert.Equal(t, "error while getting fields of the word", err.Error())
 }

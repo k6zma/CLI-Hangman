@@ -1,11 +1,13 @@
 package application
 
 import (
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-
 	"crypto/rand"
+	"fmt"
+	"log/slog"
 	"math/big"
 	"unicode/utf8"
+
+	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
 )
 
 // SelectWordByDifficulty filters words based on difficulty and returns a random word.
@@ -17,8 +19,8 @@ import (
 // Function returns:
 // - *domain.WordWithHintJSON: a pointer to the selected word.
 // - error: an error if no word matches the difficulty or a bad difficulty is entered.
-func SelectWordByDifficulty(words []domain.WordWithHintJSON, difficulty string) (*domain.WordWithHintJSON, error) {
-	var filteredWords []domain.WordWithHintJSON
+func SelectWordByDifficulty(words []infrastructure.WordWithHintJSON, difficulty string) (*infrastructure.WordWithHintJSON, error) {
+	var filteredWords []infrastructure.WordWithHintJSON
 
 	for _, word := range words {
 		wordLength := utf8.RuneCountInString(word.WordData)
@@ -37,19 +39,20 @@ func SelectWordByDifficulty(words []domain.WordWithHintJSON, difficulty string) 
 				filteredWords = append(filteredWords, word)
 			}
 		default:
-			return nil, NewWordSelectorError("invalid difficulty level")
+			return nil, NewWordSelectorError()
 		}
 	}
 
 	if len(filteredWords) == 0 {
-		return nil, NewWordSelectorError("no words found for the selected difficulty")
+		return nil, NewWordSelectorError()
 	}
 
 	maxIndex := big.NewInt(int64(len(filteredWords)))
 	randomIndex, err := rand.Int(rand.Reader, maxIndex)
 
 	if err != nil {
-		return nil, NewWordSelectorError("error generating random index")
+		slog.Error("failed to generate random index", slog.String("error", err.Error()))
+		return nil, fmt.Errorf("error generating random index: %w", err)
 	}
 
 	return &filteredWords[randomIndex.Int64()], nil

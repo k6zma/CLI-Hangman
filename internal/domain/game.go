@@ -17,30 +17,30 @@ func NewGameProperties(language, difficulty string, maxAttempts int) *GameProper
 }
 
 // GetLanguageFromProperties returns the language from the game properties.
-func (properties *GameProperties) GetLanguageFromProperties() (string, error) {
+func (properties *GameProperties) GetLanguageFromProperties() (*string, error) {
 	if properties.language == "" {
-		return "", NewGetFieldsOfGamePropertiesError("language not set")
+		return nil, NewGetFieldsOfGamePropertiesError()
 	}
 
-	return properties.language, nil
+	return &properties.language, nil
 }
 
 // GetDifficultyFromProperties returns the difficulty from the game properties.
-func (properties *GameProperties) GetDifficultyFromProperties() (string, error) {
+func (properties *GameProperties) GetDifficultyFromProperties() (*string, error) {
 	if properties.difficulty == "" {
-		return "", NewGetFieldsOfGamePropertiesError("difficulty not set")
+		return nil, NewGetFieldsOfGamePropertiesError()
 	}
 
-	return properties.difficulty, nil
+	return &properties.difficulty, nil
 }
 
 // GetMaxAttemptsFromProperties returns the maximum number of attempts from the game properties.
-func (properties *GameProperties) GetMaxAttemptsFromProperties() (int, error) {
+func (properties *GameProperties) GetMaxAttemptsFromProperties() (*int, error) {
 	if properties.maxAttempts <= 0 {
-		return -1, NewGetFieldsOfGamePropertiesError("max attempts not set")
+		return nil, NewGetFieldsOfGamePropertiesError()
 	}
 
-	return properties.maxAttempts, nil
+	return &properties.maxAttempts, nil
 }
 
 // Game represents the state of the game.
@@ -64,57 +64,57 @@ func NewGame(word *Word, maxAttempts int) *Game {
 // GetWordLetters returns the letters of a word as a rune slice.
 func (g *Game) GetWordLetters() ([]rune, error) {
 	if g.word == nil {
-		return nil, NewGetFieldsOfWordError("word is not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return g.word.GetLetters()
 }
 
 // GetWordHint returns a word hint.
-func (g *Game) GetWordHint() (string, error) {
+func (g *Game) GetWordHint() (*string, error) {
 	if g.word == nil {
-		return "", NewGetFieldsOfWordError("word is not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	return g.word.GetHint()
 }
 
 // GetCurrentAttempts returns the current number of incorrect attempts.
-func (g *Game) GetCurrentAttempts() (int, error) {
+func (g *Game) GetCurrentAttempts() (*int, error) {
 	if g.currentAttempts < 0 {
-		return 0, NewGetFieldsOfGameError("current attempts not set or invalid")
+		return nil, NewGetFieldsOfGameError()
 	}
 
-	return g.currentAttempts, nil
+	return &g.currentAttempts, nil
 }
 
 // GetMaxAttempts returns the maximum number of attempts.
-func (g *Game) GetMaxAttempts() (int, error) {
+func (g *Game) GetMaxAttempts() (*int, error) {
 	if g.maxAttempts == 0 {
-		return 0, NewGetFieldsOfGameError("max attempts not set")
+		return nil, NewGetFieldsOfGameError()
 	}
 
-	return g.maxAttempts, nil
+	return &g.maxAttempts, nil
 }
 
 // GetGuessedLetters returns the map of guessed letters or an error if the map is not initialized.
 func (g *Game) GetGuessedLetters() (map[rune]bool, error) {
 	if g.guessedLetters == nil {
-		return nil, NewGetFieldsOfGameError("guessed letters map is not initialized")
+		return nil, NewGetFieldsOfGameError()
 	}
 
 	return g.guessedLetters, nil
 }
 
 // GetLanguage returns the language of the word in the game.
-func (g *Game) GetLanguage() (string, error) {
+func (g *Game) GetLanguage() (*string, error) {
 	if g.word == nil {
-		return "", NewGetFieldsOfWordError("word is not set")
+		return nil, NewGetFieldsOfWordError()
 	}
 
 	language, err := g.word.GetLanguage()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	return language, nil
