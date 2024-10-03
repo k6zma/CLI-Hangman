@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
+	"github.com/k6zma/cli-hangman/pkg/utils"
 )
 
 // WordWithHintJSON represents a structure for a word and its hint parsed from JSON.

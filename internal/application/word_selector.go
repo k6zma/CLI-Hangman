@@ -7,7 +7,7 @@ import (
 	"math/big"
 	"unicode/utf8"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
+	"github.com/k6zma/cli-hangman/internal/infrastructure"
 )
 
 // SelectWordByDifficulty filters words based on difficulty and returns a random word.

@@ -7,8 +7,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
+	"github.com/k6zma/cli-hangman/internal/domain"
+	"github.com/k6zma/cli-hangman/pkg/utils"
 )
 
 // printTextPerSymbol prints the given text character by character with a delay.

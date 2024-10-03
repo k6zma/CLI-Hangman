@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/application"
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
+	"github.com/k6zma/cli-hangman/internal/application"
+	"github.com/k6zma/cli-hangman/internal/domain"
+	"github.com/k6zma/cli-hangman/internal/infrastructure"
 )
 
 // --------------------------------

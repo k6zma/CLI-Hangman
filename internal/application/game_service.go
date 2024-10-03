@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-	"github.com/es-debug/backend-academy-2024-go-template/internal/infrastructure"
-	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
+	"github.com/k6zma/cli-hangman/internal/domain"
+	"github.com/k6zma/cli-hangman/internal/infrastructure"
+	"github.com/k6zma/cli-hangman/pkg/utils"
 )
 
 type GameService struct{}

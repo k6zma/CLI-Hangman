@@ -11,8 +11,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/es-debug/backend-academy-2024-go-template/internal/domain"
-	"github.com/es-debug/backend-academy-2024-go-template/pkg/utils"
+	"github.com/k6zma/cli-hangman/internal/domain"
+	"github.com/k6zma/cli-hangman/pkg/utils"
 )
 
 // inputLanguage collect the user input the game language.
